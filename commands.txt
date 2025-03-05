@@ -1,0 +1,9 @@
+set_pos 000000
+sleep 1
+up 5
+sleep 1
+right 5
+sleep 1
+down 5
+sleep 1
+left 5
