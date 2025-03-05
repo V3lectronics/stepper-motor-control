@@ -25,18 +25,16 @@ int main(){
     }
 
 	string commands_file_dir, engine_1_name, engine_2_name;
-	double engine_1_dpfs, engine_2_dpfs;	
+	string engine_1_dpfs, engine_2_dpfs;	
 	config_file >> commands_file_dir;
 	config_file >> commands_file_dir;
 
-	config_file >> engine_1_name;
 	config_file >> engine_1_name;
 	config_file >> engine_1_name;
 
 	config_file >> engine_1_dpfs;
 	config_file >> engine_1_dpfs;
 
-	config_file >> engine_2_name;
 	config_file >> engine_2_name;
 	config_file >> engine_2_name;
 
@@ -44,7 +42,9 @@ int main(){
 	config_file >> engine_2_dpfs;
 
 	cout<<engine_1_name<<endl;
+	cout<<engine_1_dpfs<<endl;
 	cout<<engine_2_name<<endl;
+	cout<<engine_2_dpfs<<endl;
 
 
 
