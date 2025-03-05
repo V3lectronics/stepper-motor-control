@@ -1,9 +1,9 @@
 position 000000
-sleep 1
+sleep 1000
 up 5
-sleep 1
+sleep 750
 right 5
-sleep 1
+sleep 500
 down 5
-sleep 1
+sleep 250
 left 5

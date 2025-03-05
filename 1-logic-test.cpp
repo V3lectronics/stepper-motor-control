@@ -7,11 +7,15 @@
 using namespace std;
 const string config_path = "motor.conf";
 
-//takes a command and alligns the engines
+//takes a command and moves the engines
 //returns 0 if executed succefully 
-int run_command(string command, string argument){
+int run_command(string command, string arg){
 
-	cout<<"executing: "<<command<<" "<<argument<<endl;
+	cout<<"executing: "<<command<<" "<<arg<<endl;
+
+	if(command == "sleep"){
+		this_thread::sleep_for(chrono::milliseconds(stoi(arg)));
+	}
 	
 	return 0;
 }
@@ -23,11 +27,8 @@ int execute_command_list(string commands_file_dir){
         return 1;
     }
 
-	// string line;
 	string command, arg;
 	while(not commands_file.eof()){
-		// getline(commands_file, line);
-		// cout<<line<<endl;
 		commands_file >> command;
 		commands_file >> arg;
 		run_command(command, arg);
