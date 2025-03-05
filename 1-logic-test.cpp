@@ -10,8 +10,26 @@ const string config_path = "motor.conf";
 //takes a command and alligns the engines
 //returns 0 if executed succefully 
 int run_command(string command, string argument){
+
 	cout<<"executing: "<<command<<" "<<argument<<endl;
 	
+	return 0;
+}
+
+int execute_command_list(string commands_file_dir){
+	fstream commands_file(commands_file_dir);
+	if (not commands_file.is_open()) {
+        cerr << "Error opening "<<config_path<<endl;
+        return 1;
+    }
+
+	while(not commands_file.eof()){
+		string line;
+		getline(commands_file, line);
+		cout<<line<<endl;
+	}
+
+	commands_file.close();
 	return 0;
 }
 
@@ -41,16 +59,11 @@ int main(){
 	config_file >> engine_2_dpfs;
 	config_file >> engine_2_dpfs;
 
-	cout<<engine_1_name<<endl;
-	cout<<engine_1_dpfs<<endl;
-	cout<<engine_2_name<<endl;
-	cout<<engine_2_dpfs<<endl;
 
 
-
-
+	cout<<"----------------"<<endl;	
 	cout<<"running commands from: "<<commands_file_dir<<endl;	
-
+	execute_command_list(commands_file_dir);
 
 	
 
