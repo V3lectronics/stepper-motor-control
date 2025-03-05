@@ -1,4 +1,4 @@
-set_pos 000000
+position 000000
 sleep 1
 up 5
 sleep 1

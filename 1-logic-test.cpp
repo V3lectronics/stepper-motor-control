@@ -23,10 +23,14 @@ int execute_command_list(string commands_file_dir){
         return 1;
     }
 
+	// string line;
+	string command, arg;
 	while(not commands_file.eof()){
-		string line;
-		getline(commands_file, line);
-		cout<<line<<endl;
+		// getline(commands_file, line);
+		// cout<<line<<endl;
+		commands_file >> command;
+		commands_file >> arg;
+		run_command(command, arg);
 	}
 
 	commands_file.close();
