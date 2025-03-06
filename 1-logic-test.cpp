@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <chrono>
 #include <thread>
 
@@ -28,9 +27,7 @@ int execute_command_list(string commands_file_dir){
     }
 
 	string command, arg;
-	while(not commands_file.eof()){
-		commands_file >> command;
-		commands_file >> arg;
+	while((commands_file>>command)and(commands_file>>arg)){
 		run_command(command, arg);
 	}
 
