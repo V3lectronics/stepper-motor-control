@@ -12,9 +12,8 @@ Warszawa
 <br>
 <br>
 
-<hr>
 <h1 style='text-align: center;'>Dwuosiowe gniazdo obrotowe</h1>
-<hr>
+
 <div style='text-align: center;'> 
 Jednostka modułowa:<br>
 ZAP II – Zasady programowania strukturalnego
