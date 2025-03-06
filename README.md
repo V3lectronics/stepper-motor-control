@@ -38,9 +38,13 @@ Jan Waga
 
 # Spis treści
 Założenia programu 1
+<br>
 Planowane postępy 1
+<br>
 Instrukcja obsługi etapu pierwszego 1
+<br>
 
+<br>
 <br>
 
 # Założenia programu 
