@@ -7,13 +7,29 @@ using namespace std;
 const string config_path = "motor.conf";
 
 //takes a command and moves the engines
-//returns 0 if executed succefully 
+//returns 0 if executed succefully  
 int run_command(string command, string arg){
 
 	cout<<"executing: "<<command<<" "<<arg<<endl;
 
 	if(command == "sleep"){
 		this_thread::sleep_for(chrono::milliseconds(stoi(arg)));
+	}
+
+	if(command == "up"){
+	
+	}
+
+	if(command == "right"){
+	
+	}
+
+	if(command == "down"){
+	
+	}
+
+	if(command == "left"){
+	
 	}
 	
 	return 0;
