@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <chrono>
 #include <thread>
 #include <wiringPi.h>
@@ -24,13 +23,29 @@ const int vm4 = 29
 
 
 //takes a command and moves the engines
-//returns 0 if executed succefully 
+//returns 0 if executed succefully  
 int run_command(string command, string arg){
 
 	cout<<"executing: "<<command<<" "<<arg<<endl;
 
 	if(command == "sleep"){
 		sleep_for(milliseconds(stoi(arg)));
+	}
+
+	if(command == "up"){
+	
+	}
+
+	if(command == "right"){
+	
+	}
+
+	if(command == "down"){
+	
+	}
+
+	if(command == "left"){
+	
 	}
 	
 	return 0;
@@ -44,9 +59,7 @@ int execute_command_list(string commands_file_dir){
     }
 
 	string command, arg;
-	while(not commands_file.eof()){
-		commands_file >> command;
-		commands_file >> arg;
+	while((commands_file>>command)and(commands_file>>arg)){
 		run_command(command, arg);
 	}
 
