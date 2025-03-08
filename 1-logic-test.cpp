@@ -3,9 +3,25 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <wiringPi.h>
 
+using namespace std::chrono;
+using namespace std::this_thread;
 using namespace std;
 const string config_path = "motor.conf";
+
+//pin definitions
+//hm = horiz. motor, vm vert. motor
+const int hm1 = 29
+const int hm2 = 29
+const int hm3 = 29
+const int hm4 = 29
+const int vm1 = 29
+const int vm2 = 29
+const int vm3 = 29
+const int vm4 = 29
+//remember GND;
+
 
 //takes a command and moves the engines
 //returns 0 if executed succefully 
@@ -14,7 +30,7 @@ int run_command(string command, string arg){
 	cout<<"executing: "<<command<<" "<<arg<<endl;
 
 	if(command == "sleep"){
-		this_thread::sleep_for(chrono::milliseconds(stoi(arg)));
+		sleep_for(milliseconds(stoi(arg)));
 	}
 	
 	return 0;
@@ -45,7 +61,12 @@ int main(){
 	if (not config_file.is_open()) {
         cerr << "Error opening "<<config_path<<endl;
         return 1;
-    }
+    	}
+
+	if (wiringPiSetup() == -1){
+		cerr << "wiringPi setup failed" <<endl;
+		return 1;
+	}
 
 	string commands_file_dir, engine_1_name, engine_2_name;
 	string engine_1_dpfs, engine_2_dpfs;	
