@@ -64,21 +64,28 @@ int run_command(string command, string arg){
 		sleep_for(milliseconds(intarg));
 	}
 
-	if(command == "up"){
-		for (int i=0; i<intarg; i++){
-			// Sequence for clockwise rotation
-			int sequence[][4] = {
+	int clock_sequence[][4] = {
 				{1, 0, 0, 1},
 				{0, 0, 1, 1},
 				{0, 1, 1, 0},
 				{1, 1, 0, 0},
 			};
 
+	int counter_clock_sequence[][4] = {
+				{1, 1, 0, 0},
+				{0, 1, 1, 0},
+				{0, 0, 1, 1},
+				{1, 0, 0, 1},
+			};
+
+
+	if(command == "up"){
+		for (int i=0; i<intarg; i++){
 			for (int i = 0; i < 4; i++) {
-				digitalWrite(hm1, sequence[i][0]);
-				digitalWrite(hm2, sequence[i][1]);
-				digitalWrite(hm3, sequence[i][2]);
-				digitalWrite(hm4, sequence[i][3]);
+				digitalWrite(hm1, clock_sequence[i][0]);
+				digitalWrite(hm2, clock_sequence[i][1]);
+				digitalWrite(hm3, clock_sequence[i][2]);
+				digitalWrite(hm4, clock_sequence[i][3]);
 				sleep_for(milliseconds(step_delay));
 			}
 		}
@@ -87,19 +94,11 @@ int run_command(string command, string arg){
 
 	if(command == "down"){
 		for (int i=0; i<intarg; i++){
-			// Sequence for couterclockwise rotation
-			int sequence[][4] = {
-				{1, 1, 0, 0},
-				{0, 1, 1, 0},
-				{0, 0, 1, 1},
-				{1, 0, 0, 1},
-			};
-
 			for (int i = 0; i < 4; i++) {
-				digitalWrite(hm1, sequence[i][0]);
-				digitalWrite(hm2, sequence[i][1]);
-				digitalWrite(hm3, sequence[i][2]);
-				digitalWrite(hm4, sequence[i][3]);
+				digitalWrite(hm1, counter_clock_sequence[i][0]);
+				digitalWrite(hm2, counter_clock_sequence[i][1]);
+				digitalWrite(hm3, counter_clock_sequence[i][2]);
+				digitalWrite(hm4, counter_clock_sequence[i][3]);
 				sleep_for(milliseconds(step_delay));
 			}
 		}
@@ -107,19 +106,11 @@ int run_command(string command, string arg){
 
 	if(command == "right"){
 		for (int i=0; i<intarg; i++){
-			// Sequence for clockwise rotation
-			int sequence[][4] = {
-				{1, 0, 0, 1},
-				{0, 0, 1, 1},
-				{0, 1, 1, 0},
-				{1, 1, 0, 0},
-			};
-
 			for (int i = 0; i < 4; i++) {
-				digitalWrite(vm1, sequence[i][0]);
-				digitalWrite(vm2, sequence[i][1]);
-				digitalWrite(vm3, sequence[i][2]);
-				digitalWrite(vm4, sequence[i][3]);
+				digitalWrite(vm1, clock_sequence[i][0]);
+				digitalWrite(vm2, clock_sequence[i][1]);
+				digitalWrite(vm3, clock_sequence[i][2]);
+				digitalWrite(vm4, clock_sequence[i][3]);
 				sleep_for(milliseconds(step_delay));
 			}
 		}
@@ -127,19 +118,11 @@ int run_command(string command, string arg){
 
 	if(command == "left"){
 		for (int i=0; i<intarg; i++){
-			// Sequence for couterclockwise rotation
-			int sequence[][4] = {
-				{1, 1, 0, 0},
-				{0, 1, 1, 0},
-				{0, 0, 1, 1},
-				{1, 0, 0, 1},
-			};
-
 			for (int i = 0; i < 4; i++) {
-				digitalWrite(vm1, sequence[i][0]);
-				digitalWrite(vm2, sequence[i][1]);
-				digitalWrite(vm3, sequence[i][2]);
-				digitalWrite(vm4, sequence[i][3]);
+				digitalWrite(vm1, counter_clock_sequence[i][0]);
+				digitalWrite(vm2, counter_clock_sequence[i][1]);
+				digitalWrite(vm3, counter_clock_sequence[i][2]);
+				digitalWrite(vm4, counter_clock_sequence[i][3]);
 				sleep_for(milliseconds(step_delay));
 			}
 		}
