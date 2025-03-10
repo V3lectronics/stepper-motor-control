@@ -31,7 +31,7 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-const int step_delay = 4;
+const int step_delay = 200;
 
 //takes a command and moves the engines
 //returns 0 if executed succefully  
@@ -65,29 +65,52 @@ int run_command(string command, string arg){
 	}
 
 	if(command == "up"){
-		// Sequence for clockwise rotation
-		int sequence[][4] = {
-			{1, 0, 0, 0},
-			{1, 1, 0, 0},
-			{0, 1, 0, 0},
-			{0, 1, 1, 0},
-			{0, 0, 1, 0},
-			{0, 0, 1, 1},
-			{0, 0, 0, 1},
-			{1, 0, 0, 1}
-		};
+		for (int i=0; i<intarg; i++){
+			// Sequence for clockwise rotation
+			int sequence[][4] = {
+				{1, 0, 0, 0},
+				{1, 1, 0, 0},
+				{0, 1, 0, 0},
+				{0, 1, 1, 0},
+				{0, 0, 1, 0},
+				{0, 0, 1, 1},
+				{0, 0, 0, 1},
+				{1, 0, 0, 1}
+			};
 
-		for (int i = 0; i < 8; i++) {
-			digitalWrite(hm1, sequence[i][0]);
-			digitalWrite(hm2, sequence[i][1]);
-			digitalWrite(hm3, sequence[i][2]);
-			digitalWrite(hm4, sequence[i][3]);
-			sleep_for(milliseconds(step_delay));
+			for (int i = 0; i < 8; i++) {
+				digitalWrite(hm1, sequence[i][0]);
+				digitalWrite(hm2, sequence[i][1]);
+				digitalWrite(hm3, sequence[i][2]);
+				digitalWrite(hm4, sequence[i][3]);
+				sleep_for(milliseconds(step_delay));
+			}
 		}
 	}
 
 
 	if(command == "down"){
+		for (int i=0; i<intarg; i++){
+			// Sequence for couterclockwise rotation
+			int sequence[][4] = {
+				{0, 0, 0, 1},
+				{1, 0, 0, 1},
+				{1, 0, 0, 0},
+				{1, 1, 0, 0},
+				{0, 1, 0, 0},
+				{0, 1, 1, 0},
+				{0, 0, 1, 0},
+				{0, 0, 1, 1}
+			};
+
+			for (int i = 0; i < 8; i++) {
+				digitalWrite(hm1, sequence[i][0]);
+				digitalWrite(hm2, sequence[i][1]);
+				digitalWrite(hm3, sequence[i][2]);
+				digitalWrite(hm4, sequence[i][3]);
+				sleep_for(milliseconds(step_delay));
+			}
+		}
 	
 	}
 
