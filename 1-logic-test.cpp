@@ -65,35 +65,25 @@ int run_command(string command, string arg){
 	}
 
 	if(command == "up"){
-		for (int i = 0; i < intarg*2; i++) {
-			switch (i % 4) {
-				case 0:
-					digitalWrite(hm1, HIGH);
-					digitalWrite(hm2, LOW);
-					digitalWrite(hm3, HIGH);
-					digitalWrite(hm4, LOW);
-					break;
-				case 1:
-					digitalWrite(hm1, LOW);
-					digitalWrite(hm2, HIGH);
-					digitalWrite(hm3, HIGH);
-					digitalWrite(hm4, LOW);
-					break;
-				case 2:
-					digitalWrite(hm1, LOW);
-					digitalWrite(hm2, HIGH);
-					digitalWrite(hm3, LOW);
-					digitalWrite(hm4, HIGH);
-					break;
-				case 3:
-					digitalWrite(hm1, HIGH);
-					digitalWrite(hm2, LOW);
-					digitalWrite(hm3, LOW);
-					digitalWrite(hm4, HIGH);
-					break;
-			}
+		// Sequence for clockwise rotation
+		int sequence[][4] = {
+			{1, 0, 0, 0},
+			{1, 1, 0, 0},
+			{0, 1, 0, 0},
+			{0, 1, 1, 0},
+			{0, 0, 1, 0},
+			{0, 0, 1, 1},
+			{0, 0, 0, 1},
+			{1, 0, 0, 1}
+		};
+
+		for (int i = 0; i < 8; i++) {
+			digitalWrite(hm1, sequence[i][0]);
+			digitalWrite(hm2, sequence[i][1]);
+			digitalWrite(hm3, sequence[i][2]);
+			digitalWrite(hm4, sequence[i][3]);
 			sleep_for(milliseconds(step_delay));
-		}	
+		}
 	}
 
 
