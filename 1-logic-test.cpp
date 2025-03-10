@@ -9,31 +9,76 @@ using namespace std::this_thread;
 using namespace std;
 const string config_path = "motor.conf";
 
-//pin definitions
+//PIN DEFINITIONS
+// !!! CAUTION !!!
+// If the program is interrupted or suspended and the
+// pins are in HIGH state the engine coils may overheat.
 //hm = horiz. motor, vm vert. motor
-const int hm1 = 29
-const int hm2 = 29
-const int hm3 = 29
-const int hm4 = 29
-const int vm1 = 29
-const int vm2 = 29
-const int vm3 = 29
-const int vm4 = 29
-//remember GND;
+const int hm1 = 29; //40
+const int hm2 = 28; //38
+const int hm3 = 27; //36
+const int hm4 = 26; //32
+//--------------- ;
+const int vm1 = 25; //37
+const int vm2 = 24; //35
+const int vm3 = 23; //33
+const int vm4 = 22; //31
+//(remember to connect GND);
 
 
 //takes a command and moves the engines
 //returns 0 if executed succefully  
 int run_command(string command, string arg){
+	pinMode(hm1, OUTPUT);
+	pinMode(hm2, OUTPUT);
+	pinMode(hm3, OUTPUT);
+	pinMode(hm4, OUTPUT);
+	digitalWrite(hm1, LOW);
+	digitalWrite(hm2, LOW);
+	digitalWrite(hm3, LOW);
+	digitalWrite(hm4, LOW);
 
-	cout<<"executing: "<<command<<" "<<arg<<endl;
+	int intarg = stoi(arg);
+
+	cout<<"executing: "<<command<<" "<<intarg<<endl;
 
 	if(command == "sleep"){
-		sleep_for(milliseconds(stoi(arg)));
+		sleep_for(milliseconds(intarg));
 	}
 
-	if(command == "up"){
-	
+	if(command == "up"){ // this should not be up fix later !!!
+		//digitalWrite(hm3, HIGH);
+		//return 100;
+		for (int i = 0; i < intarg*2; i++) {
+			cout<<"a"<<endl;
+			switch (i % 4) {
+				case 0:
+					digitalWrite(hm1, HIGH);
+					digitalWrite(hm2, LOW);
+					digitalWrite(hm3, HIGH);
+					digitalWrite(hm4, LOW);
+					break;
+				case 1:
+					digitalWrite(hm1, LOW);
+					digitalWrite(hm2, HIGH);
+					digitalWrite(hm3, HIGH);
+					digitalWrite(hm4, LOW);
+					break;
+				case 2:
+					digitalWrite(hm1, LOW);
+					digitalWrite(hm2, HIGH);
+					digitalWrite(hm3, LOW);
+					digitalWrite(hm4, HIGH);
+					break;
+				case 3:
+					digitalWrite(hm1, HIGH);
+					digitalWrite(hm2, LOW);
+					digitalWrite(hm3, LOW);
+					digitalWrite(hm4, HIGH);
+					break;
+			}
+			sleep_for(milliseconds(5));
+		}	
 	}
 
 	if(command == "right"){
@@ -47,6 +92,11 @@ int run_command(string command, string arg){
 	if(command == "left"){
 	
 	}
+
+	digitalWrite(hm1, LOW);
+	digitalWrite(hm2, LOW);
+	digitalWrite(hm3, LOW);
+	digitalWrite(hm4, LOW);
 	
 	return 0;
 }

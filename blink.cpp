@@ -1,16 +1,15 @@
-//this is just a test
 #include <wiringPi.h>
 #include <iostream>
 #include <chrono>
 #include <thread>
 
-const int LED_PIN = 29;
+const int LED_PIN = 26;
 
 using namespace std;
 using namespace std::chrono;
 using namespace std::this_thread;
 
-int main(int argc, char * argv[])
+int main()
 {
 	if (wiringPiSetup() == -1){
 		cerr << "wiring pi failed" <<endl;
