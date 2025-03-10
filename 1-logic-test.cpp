@@ -65,44 +65,42 @@ int run_command(string command, string arg){
 	}
 
 	int clock_sequence[][4] = {
-				{1, 0, 0, 1},
-				{0, 0, 1, 1},
-				{0, 1, 1, 0},
-				{1, 1, 0, 0},
-			};
+    {1, 0, 0, 1},
+    {0, 0, 1, 1},
+    {0, 1, 1, 0},
+    {1, 1, 0, 0},
+};
 
-	int counter_clock_sequence[][4] = {
-				{1, 1, 0, 0},
-				{0, 1, 1, 0},
-				{0, 0, 1, 1},
-				{1, 0, 0, 1},
-			};
+int counter_clock_sequence[][4] = {
+    {1, 1, 0, 0},
+    {0, 1, 1, 0},
+    {0, 0, 1, 1},
+    {1, 0, 0, 1},
+};
 
+if (command == "up") {
+    int phase = 0; // Start from the first phase
+    for (int i = 0; i < intarg; i++) {
+        digitalWrite(hm1, clock_sequence[phase][0]);
+        digitalWrite(hm2, clock_sequence[phase][1]);
+        digitalWrite(hm3, clock_sequence[phase][2]);
+        digitalWrite(hm4, clock_sequence[phase][3]);
+        phase = (phase + 1) % 4; // Move to the next phase
+        sleep_for(milliseconds(step_delay));
+    }
+}
 
-	if(command == "up"){
-		for (int i=0; i<intarg; i++){
-			for (int i = 0; i < 4; i++) {
-				digitalWrite(hm1, clock_sequence[i][0]);
-				digitalWrite(hm2, clock_sequence[i][1]);
-				digitalWrite(hm3, clock_sequence[i][2]);
-				digitalWrite(hm4, clock_sequence[i][3]);
-				sleep_for(milliseconds(step_delay));
-			}
-		}
-	}
-
-
-	if(command == "down"){
-		for (int i=0; i<intarg; i++){
-			for (int i = 0; i < 4; i++) {
-				digitalWrite(hm1, counter_clock_sequence[i][0]);
-				digitalWrite(hm2, counter_clock_sequence[i][1]);
-				digitalWrite(hm3, counter_clock_sequence[i][2]);
-				digitalWrite(hm4, counter_clock_sequence[i][3]);
-				sleep_for(milliseconds(step_delay));
-			}
-		}
-	}
+if (command == "down") {
+    int phase = 0; // Start from the first phase
+    for (int i = 0; i < intarg; i++) {
+        digitalWrite(hm1, counter_clock_sequence[phase][0]);
+        digitalWrite(hm2, counter_clock_sequence[phase][1]);
+        digitalWrite(hm3, counter_clock_sequence[phase][2]);
+        digitalWrite(hm4, counter_clock_sequence[phase][3]);
+        phase = (phase + 1) % 4; // Move to the next phase
+        sleep_for(milliseconds(step_delay));
+    }
+}
 
 	if(command == "right"){
 		for (int i=0; i<intarg; i++){
