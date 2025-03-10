@@ -74,7 +74,7 @@ int run_command(string command, string arg){
 				{1, 1, 0, 0},
 			};
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 4; i++) {
 				digitalWrite(hm1, sequence[i][0]);
 				digitalWrite(hm2, sequence[i][1]);
 				digitalWrite(hm3, sequence[i][2]);
@@ -95,7 +95,7 @@ int run_command(string command, string arg){
 				{1, 0, 0, 1},
 			};
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < 4; i++) {
 				digitalWrite(hm1, sequence[i][0]);
 				digitalWrite(hm2, sequence[i][1]);
 				digitalWrite(hm3, sequence[i][2]);
@@ -103,21 +103,57 @@ int run_command(string command, string arg){
 				sleep_for(milliseconds(step_delay));
 			}
 		}
-	
 	}
 
 	if(command == "right"){
-	
+		for (int i=0; i<intarg; i++){
+			// Sequence for clockwise rotation
+			int sequence[][4] = {
+				{1, 0, 0, 1},
+				{0, 0, 1, 1},
+				{0, 1, 1, 0},
+				{1, 1, 0, 0},
+			};
+
+			for (int i = 0; i < 4; i++) {
+				digitalWrite(vm1, sequence[i][0]);
+				digitalWrite(vm2, sequence[i][1]);
+				digitalWrite(vm3, sequence[i][2]);
+				digitalWrite(vm4, sequence[i][3]);
+				sleep_for(milliseconds(step_delay));
+			}
+		}
 	}
 
 	if(command == "left"){
-	
+		for (int i=0; i<intarg; i++){
+			// Sequence for couterclockwise rotation
+			int sequence[][4] = {
+				{1, 1, 0, 0},
+				{0, 1, 1, 0},
+				{0, 0, 1, 1},
+				{1, 0, 0, 1},
+			};
+
+			for (int i = 0; i < 4; i++) {
+				digitalWrite(vm1, sequence[i][0]);
+				digitalWrite(vm2, sequence[i][1]);
+				digitalWrite(vm3, sequence[i][2]);
+				digitalWrite(vm4, sequence[i][3]);
+				sleep_for(milliseconds(step_delay));
+			}
+		}
 	}
 
+	//cleanup to stop heating up coils
 	digitalWrite(hm1, LOW);
 	digitalWrite(hm2, LOW);
 	digitalWrite(hm3, LOW);
 	digitalWrite(hm4, LOW);
+	digitalWrite(vm1, LOW);
+	digitalWrite(vm2, LOW);
+	digitalWrite(vm3, LOW);
+	digitalWrite(vm4, LOW);
 	
 	return 0;
 }
