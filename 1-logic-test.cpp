@@ -68,14 +68,10 @@ int run_command(string command, string arg){
 		for (int i=0; i<intarg; i++){
 			// Sequence for clockwise rotation
 			int sequence[][4] = {
-				{1, 0, 0, 0},
-				{1, 1, 0, 0},
-				{0, 1, 0, 0},
-				{0, 1, 1, 0},
-				{0, 0, 1, 0},
+				{1, 0, 0, 1},
 				{0, 0, 1, 1},
-				{0, 0, 0, 1},
-				{1, 0, 0, 1}
+				{0, 1, 1, 0},
+				{1, 1, 0, 0},
 			};
 
 			for (int i = 0; i < 8; i++) {
@@ -93,14 +89,10 @@ int run_command(string command, string arg){
 		for (int i=0; i<intarg; i++){
 			// Sequence for couterclockwise rotation
 			int sequence[][4] = {
-				{0, 0, 0, 1},
-				{1, 0, 0, 1},
-				{1, 0, 0, 0},
 				{1, 1, 0, 0},
-				{0, 1, 0, 0},
 				{0, 1, 1, 0},
-				{0, 0, 1, 0},
-				{0, 0, 1, 1}
+				{0, 0, 1, 1},
+				{1, 0, 0, 1},
 			};
 
 			for (int i = 0; i < 8; i++) {
