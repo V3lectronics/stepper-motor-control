@@ -13,7 +13,13 @@ const string config_path = "motor.conf";
 // !!! CAUTION !!!
 // If the program is interrupted or suspended and the
 // pins are in HIGH state the engine coils may overheat.
-//hm = horiz. motor, vm vert. motor
+//
+//naming convention:
+//hm → horizontal motor
+//vm → vertical motor
+//
+//			wiringPi physical
+//				↓	   ↓
 const int hm1 = 29; //40
 const int hm2 = 28; //38
 const int hm3 = 27; //36
@@ -25,18 +31,30 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
+const int step_delay = 4;
 
 //takes a command and moves the engines
 //returns 0 if executed succefully  
 int run_command(string command, string arg){
+
+	//initialize the pins
 	pinMode(hm1, OUTPUT);
 	pinMode(hm2, OUTPUT);
 	pinMode(hm3, OUTPUT);
 	pinMode(hm4, OUTPUT);
+	pinMode(vm1, OUTPUT);
+	pinMode(vm2, OUTPUT);
+	pinMode(vm3, OUTPUT);
+	pinMode(vm4, OUTPUT);
 	digitalWrite(hm1, LOW);
 	digitalWrite(hm2, LOW);
 	digitalWrite(hm3, LOW);
 	digitalWrite(hm4, LOW);
+	digitalWrite(vm1, LOW);
+	digitalWrite(vm2, LOW);
+	digitalWrite(vm3, LOW);
+	digitalWrite(vm4, LOW);
+
 
 	int intarg = stoi(arg);
 
@@ -46,11 +64,8 @@ int run_command(string command, string arg){
 		sleep_for(milliseconds(intarg));
 	}
 
-	if(command == "up"){ // this should not be up fix later !!!
-		//digitalWrite(hm3, HIGH);
-		//return 100;
+	if(command == "up"){
 		for (int i = 0; i < intarg*2; i++) {
-			cout<<"a"<<endl;
 			switch (i % 4) {
 				case 0:
 					digitalWrite(hm1, HIGH);
@@ -77,15 +92,16 @@ int run_command(string command, string arg){
 					digitalWrite(hm4, HIGH);
 					break;
 			}
-			sleep_for(milliseconds(5));
+			sleep_for(milliseconds(step_delay));
 		}	
 	}
 
-	if(command == "right"){
+
+	if(command == "down"){
 	
 	}
 
-	if(command == "down"){
+	if(command == "right"){
 	
 	}
 
@@ -104,9 +120,17 @@ int run_command(string command, string arg){
 int execute_command_list(string commands_file_dir){
 	fstream commands_file(commands_file_dir);
 	if (not commands_file.is_open()) {
-        cerr << "Error opening "<<config_path<<endl;
+        cerr << "ERROR couldn't open "<<config_path<<endl;
         return 1;
     }
+
+	if(step_delay < 0){
+		cerr<<"ERROR step delay has to be a positive integer"<<endl;
+		return 1;
+	}
+	if(step_delay < 5){
+		cout<<"WARNING low step delay, this may cause unexpected behavior"<<endl;
+	}
 
 	string command, arg;
 	while((commands_file>>command)and(commands_file>>arg)){
@@ -122,12 +146,12 @@ int main(){
 	fstream config_file(config_path);
 
 	if (not config_file.is_open()) {
-        cerr << "Error opening "<<config_path<<endl;
+        cerr << "ERROR couldn't open "<<config_path<<endl;
         return 1;
     	}
 
 	if (wiringPiSetup() == -1){
-		cerr << "wiringPi setup failed" <<endl;
+		cerr << "ERROR wiringPi setup failed" <<endl;
 		return 1;
 	}
 
