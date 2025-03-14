@@ -2,6 +2,7 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include <cmath>
 #include <wiringPi.h>
 
 using namespace std::chrono;
@@ -32,6 +33,9 @@ const int vm4 = 22; //31
 //(remember to connect GND);
 
 const int step_delay = 2;
+const int ramp_amount = 5; //acceleration
+const int ramp_percent = 20; //defines at what point of the command we finish
+							 //and start acceleration.
 
 //takes a command and moves the engines
 //returns 0 if executed succefully  
@@ -78,16 +82,29 @@ int counter_clock_sequence[][4] = {
     {1, 0, 0, 1},
 };
 
+
 if (command == "up") {
-    int phase = 0;
-    for (int i = 0; i < intarg; i++) {
-        digitalWrite(hm1, clock_sequence[phase][0]);
-        digitalWrite(hm2, clock_sequence[phase][1]);
-        digitalWrite(hm3, clock_sequence[phase][2]);
-        digitalWrite(hm4, clock_sequence[phase][3]);
-        phase = (phase + 1) % 4; 
-        sleep_for(milliseconds(step_delay));
-    }
+	int phase = 0;
+
+	double progress = 0; // 0-1 value representing command execution progress
+	for (int i = 0; i < intarg; i++) {
+		progress = double(i)/intarg;
+		digitalWrite(hm1, clock_sequence[phase][0]);
+		digitalWrite(hm2, clock_sequence[phase][1]);
+		digitalWrite(hm3, clock_sequence[phase][2]);
+		digitalWrite(hm4, clock_sequence[phase][3]);
+		phase = (phase + 1) % 4; 
+
+// float rounded_down = floorf(val * 1000) / 1000;   /* 1.2345 */
+
+		if(progress < ramp_percent){
+			int round_step_delay = floorf(step_delay * progress * ramp_amount);
+			sleep_for(milliseconds(round_step_delay));
+		}
+		else{
+			sleep_for(milliseconds(step_delay));
+		}
+	}
 }
 
 if (command == "down") {
