@@ -18,8 +18,8 @@ const string config_path = "motor.conf";
 //hm → horizontal motor
 //vm → vertical motor
 //
-//			wiringPi physical
-//				↓	   ↓
+//	    wiringPi physical
+//	        ↓    ↓
 const int hm1 = 29; //40
 const int hm2 = 28; //38
 const int hm3 = 27; //36
@@ -31,7 +31,7 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-const int step_delay = 200;
+const int step_delay = 2;
 
 //takes a command and moves the engines
 //returns 0 if executed succefully  
@@ -79,52 +79,52 @@ int counter_clock_sequence[][4] = {
 };
 
 if (command == "up") {
-    int phase = 0; // Start from the first phase
+    int phase = 0;
     for (int i = 0; i < intarg; i++) {
         digitalWrite(hm1, clock_sequence[phase][0]);
         digitalWrite(hm2, clock_sequence[phase][1]);
         digitalWrite(hm3, clock_sequence[phase][2]);
         digitalWrite(hm4, clock_sequence[phase][3]);
-        phase = (phase + 1) % 4; // Move to the next phase
+        phase = (phase + 1) % 4; 
         sleep_for(milliseconds(step_delay));
     }
 }
 
 if (command == "down") {
-    int phase = 0; // Start from the first phase
+    int phase = 0;
     for (int i = 0; i < intarg; i++) {
         digitalWrite(hm1, counter_clock_sequence[phase][0]);
         digitalWrite(hm2, counter_clock_sequence[phase][1]);
         digitalWrite(hm3, counter_clock_sequence[phase][2]);
         digitalWrite(hm4, counter_clock_sequence[phase][3]);
-        phase = (phase + 1) % 4; // Move to the next phase
+        phase = (phase + 1) % 4; 
         sleep_for(milliseconds(step_delay));
     }
 }
 
-	if(command == "right"){
-		for (int i=0; i<intarg; i++){
-			for (int i = 0; i < 4; i++) {
-				digitalWrite(vm1, clock_sequence[i][0]);
-				digitalWrite(vm2, clock_sequence[i][1]);
-				digitalWrite(vm3, clock_sequence[i][2]);
-				digitalWrite(vm4, clock_sequence[i][3]);
-				sleep_for(milliseconds(step_delay));
-			}
-		}
+if(command == "right"){
+	int phase = 0;
+	for (int i = 0; i < intarg; i++) {
+		digitalWrite(vm1, clock_sequence[phase][0]);
+		digitalWrite(vm2, clock_sequence[phase][1]);
+		digitalWrite(vm3, clock_sequence[phase][2]);
+		digitalWrite(vm4, clock_sequence[phase][3]);
+		phase = (phase + 1) % 4; 
+		sleep_for(milliseconds(step_delay));
 	}
+}
 
-	if(command == "left"){
-		for (int i=0; i<intarg; i++){
-			for (int i = 0; i < 4; i++) {
-				digitalWrite(vm1, counter_clock_sequence[i][0]);
-				digitalWrite(vm2, counter_clock_sequence[i][1]);
-				digitalWrite(vm3, counter_clock_sequence[i][2]);
-				digitalWrite(vm4, counter_clock_sequence[i][3]);
-				sleep_for(milliseconds(step_delay));
-			}
-		}
+if(command == "left"){
+	int phase = 0;
+	for (int i = 0; i < intarg; i++) {
+		digitalWrite(vm1, counter_clock_sequence[phase][0]);
+		digitalWrite(vm2, counter_clock_sequence[phase][1]);
+		digitalWrite(vm3, counter_clock_sequence[phase][2]);
+		digitalWrite(vm4, counter_clock_sequence[phase][3]);
+		phase = (phase + 1) % 4;
+		sleep_for(milliseconds(step_delay));
 	}
+}
 
 	//cleanup to stop heating up coils
 	digitalWrite(hm1, LOW);

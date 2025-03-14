@@ -1,0 +1,8 @@
+up 4
+sleep 500
+down 4
+sleep 500
+up 4
+sleep 500
+down 4
+
