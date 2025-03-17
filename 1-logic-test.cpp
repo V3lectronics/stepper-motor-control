@@ -32,27 +32,30 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-const int step_delay = 2;
-const int ramp_amount = 5; //acceleration
+const int step_delay = 10; //step delay at full speed
+const double ramp_amount = 20; //acceleration
 const double ramp_percent = 0.20; //defines at what point of the command we finish
 							 //and start acceleration.
 
-void ramp(int progress){
+void ramp(double progress){
+		//cout<<progress<<endl;
 		int round_step_delay;
 
 		if(progress < ramp_percent){
-			round_step_delay = floorf(step_delay + progress * ramp_amount);
+			round_step_delay = floorf(step_delay - progress * ramp_amount);
 			sleep_for(milliseconds(round_step_delay));
-			cout << round_step_delay << endl;
+			cout << "0-20%" << round_step_delay << endl;
 
 		} else if(progress > 1-ramp_percent){
 			round_step_delay = floorf(step_delay + progress * ramp_amount);
-			cout << round_step_delay << endl;
+			sleep_for(milliseconds(round_step_delay));
+			cout << "80-100%" << round_step_delay << endl;
 		}
 
 		else{
+			round_step_delay = floorf(step_delay - ramp_amount);
 			sleep_for(milliseconds(step_delay));
-			cout << step_delay << endl;
+			cout <<"20%-80%" << round_step_delay << endl;
 		}
 }
 
@@ -107,14 +110,13 @@ if (command == "up") {
 
 	double progress = 0; // 0-1 value representing command execution progress
 	for (int i = 0; i < intarg; i++) {
-		progress = double(i)/intarg;
+		progress = double(i)/double(intarg);
 		digitalWrite(hm1, clock_sequence[phase][0]);
 		digitalWrite(hm2, clock_sequence[phase][1]);
 		digitalWrite(hm3, clock_sequence[phase][2]);
 		digitalWrite(hm4, clock_sequence[phase][3]);
 		phase = (phase + 1) % 4; 
 
-// float rounded_down = floorf(val * 1000) / 1000;   /* 1.2345 */
 		ramp(progress);
 
 	}
