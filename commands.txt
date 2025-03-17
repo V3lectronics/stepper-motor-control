@@ -1,16 +1,6 @@
 sleep 1000
-left 300
-sleep 1000
-right 300
-sleep 1000
-up 300
-sleep 1000
-down 300
-up 300
-sleep 1000
-down 300
-sleep 500
-left 300
-sleep 500
-right 300
-
+up 100
+down 100
+left 100
+right 100
+end 0

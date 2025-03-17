@@ -4,10 +4,94 @@
 #include <thread>
 #include <cmath>
 #include <wiringPi.h>
+#include <ctime>
 
 using namespace std::chrono;
 using namespace std::this_thread;
 using namespace std;
+
+bool history_list_initialized_flag = 0;
+string history_file_dir;
+
+struct Node{
+	string timestamp;
+	string command;
+	Node* next;
+	Node(string new_timestamp, string new_command){
+		timestamp = new_timestamp;
+		command = new_command;
+	}
+};
+
+Node* head;
+
+void display(Node* head){
+	cout<<"--------"<<endl;
+	Node* current = head;
+	while (current!=nullptr){
+		cout <<'['<< current->timestamp<< " : " << current->command<<']' << " ";
+		current = current->next;
+	}
+	cout<<endl;
+	cout<<"--------"<<endl;
+}
+
+void append(Node*& head, string timestamp, string command){
+	Node* current = head;
+	Node* new_node = new Node(timestamp, command);
+
+	if (head == nullptr){
+		head = new_node;
+		return;
+	}	
+
+	while (current->next!=nullptr){
+		current=current->next;
+	}
+
+	current->next = new_node;
+}
+
+int save_history(string history_file_dir, string command, string arg){
+	if (history_list_initialized_flag == 0){
+		time_t timestamp = time(NULL);
+		string ts = to_string(timestamp);
+		Node* head = new Node(ts, "START");
+		history_list_initialized_flag = 1;
+	}
+
+	time_t timestamp = time(NULL);
+	string ts = to_string(timestamp);
+
+	string command_arg = command+" "+arg;
+
+	append(head, ts, command_arg);
+	display(head);
+
+	if (command == "end"){
+		cout<<"Writing history to: "<<history_file_dir<<endl;	
+		fstream history_file(history_file_dir);
+
+		if (not history_file.is_open()) {
+			cerr << "ERROR couldn't open "<<history_file_dir<<endl;
+			return 1;
+		}
+
+
+		Node* current = head;
+		while (current != nullptr) {
+			history_file << current->timestamp << " " << current->command<< endl;
+			current = current->next;
+		}
+		history_file.close();
+
+
+		cout<<"History saved succesfully"<<endl;
+		history_file.close();
+	}
+	return 0;
+}
+
 const string config_path = "motor.conf";
 
 //PIN DEFINITIONS
@@ -91,74 +175,74 @@ int run_command(string command, string arg){
 	}
 
 	int clock_sequence[][4] = {
-    {1, 0, 0, 1},
-    {0, 0, 1, 1},
-    {0, 1, 1, 0},
-    {1, 1, 0, 0},
-};
+	    {1, 0, 0, 1},
+	    {0, 0, 1, 1},
+	    {0, 1, 1, 0},
+	    {1, 1, 0, 0},
+	};
 
-int counter_clock_sequence[][4] = {
-    {1, 1, 0, 0},
-    {0, 1, 1, 0},
-    {0, 0, 1, 1},
-    {1, 0, 0, 1},
-};
+	int counter_clock_sequence[][4] = {
+	    {1, 1, 0, 0},
+	    {0, 1, 1, 0},
+	    {0, 0, 1, 1},
+	    {1, 0, 0, 1},
+	};
 
 
-if (command == "up") {
-	int phase = 0;
+	if (command == "up") {
+		int phase = 0;
 
-	double progress = 0; // 0-1 value representing command execution progress
-	for (int i = 0; i < intarg; i++) {
-		progress = double(i)/double(intarg);
-		digitalWrite(hm1, clock_sequence[phase][0]);
-		digitalWrite(hm2, clock_sequence[phase][1]);
-		digitalWrite(hm3, clock_sequence[phase][2]);
-		digitalWrite(hm4, clock_sequence[phase][3]);
-		phase = (phase + 1) % 4; 
+		double progress = 0; // 0-1 value representing command execution progress
+		for (int i = 0; i < intarg; i++) {
+			progress = double(i)/double(intarg);
+			digitalWrite(hm1, clock_sequence[phase][0]);
+			digitalWrite(hm2, clock_sequence[phase][1]);
+			digitalWrite(hm3, clock_sequence[phase][2]);
+			digitalWrite(hm4, clock_sequence[phase][3]);
+			phase = (phase + 1) % 4; 
 
-		ramp(progress);
+			ramp(progress);
 
+		}
 	}
-}
 
-if (command == "down") {
-    int phase = 0;
-    for (int i = 0; i < intarg; i++) {
-        digitalWrite(hm1, counter_clock_sequence[phase][0]);
-        digitalWrite(hm2, counter_clock_sequence[phase][1]);
-        digitalWrite(hm3, counter_clock_sequence[phase][2]);
-        digitalWrite(hm4, counter_clock_sequence[phase][3]);
-        phase = (phase + 1) % 4; 
-        sleep_for(milliseconds(step_delay));
-    }
-}
-
-if(command == "right"){
-	int phase = 0;
-	for (int i = 0; i < intarg; i++) {
-		digitalWrite(vm1, clock_sequence[phase][0]);
-		digitalWrite(vm2, clock_sequence[phase][1]);
-		digitalWrite(vm3, clock_sequence[phase][2]);
-		digitalWrite(vm4, clock_sequence[phase][3]);
+	if (command == "down") {
+	    int phase = 0;
+	    for (int i = 0; i < intarg; i++) {
+		digitalWrite(hm1, counter_clock_sequence[phase][0]);
+		digitalWrite(hm2, counter_clock_sequence[phase][1]);
+		digitalWrite(hm3, counter_clock_sequence[phase][2]);
+		digitalWrite(hm4, counter_clock_sequence[phase][3]);
 		phase = (phase + 1) % 4; 
 		sleep_for(milliseconds(step_delay));
+	    }
 	}
-}
 
-if(command == "left"){
-	int phase = 0;
-	for (int i = 0; i < intarg; i++) {
-		digitalWrite(vm1, counter_clock_sequence[phase][0]);
-		digitalWrite(vm2, counter_clock_sequence[phase][1]);
-		digitalWrite(vm3, counter_clock_sequence[phase][2]);
-		digitalWrite(vm4, counter_clock_sequence[phase][3]);
-		phase = (phase + 1) % 4;
-		sleep_for(milliseconds(step_delay));
+	if(command == "right"){
+		int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(vm1, clock_sequence[phase][0]);
+			digitalWrite(vm2, clock_sequence[phase][1]);
+			digitalWrite(vm3, clock_sequence[phase][2]);
+			digitalWrite(vm4, clock_sequence[phase][3]);
+			phase = (phase + 1) % 4; 
+			sleep_for(milliseconds(step_delay));
+		}
 	}
-}
 
-	//cleanup to stop heating up coils
+	if(command == "left"){
+		int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(vm1, counter_clock_sequence[phase][0]);
+			digitalWrite(vm2, counter_clock_sequence[phase][1]);
+			digitalWrite(vm3, counter_clock_sequence[phase][2]);
+			digitalWrite(vm4, counter_clock_sequence[phase][3]);
+			phase = (phase + 1) % 4;
+			sleep_for(milliseconds(step_delay));
+		}
+	}
+
+	//cleanup to stop coils from overheating / energy waste
 	digitalWrite(hm1, LOW);
 	digitalWrite(hm2, LOW);
 	digitalWrite(hm3, LOW);
@@ -167,6 +251,9 @@ if(command == "left"){
 	digitalWrite(vm2, LOW);
 	digitalWrite(vm3, LOW);
 	digitalWrite(vm4, LOW);
+
+
+	save_history(history_file_dir, command, to_string(intarg));
 	
 	return 0;
 }
@@ -195,6 +282,7 @@ int execute_command_list(string commands_file_dir){
 	return 0;
 }
 
+
 int main(){
 	cout<<"using config from: "<<config_path<<endl;	
 	fstream config_file(config_path);
@@ -211,8 +299,12 @@ int main(){
 
 	string commands_file_dir, engine_1_name, engine_2_name;
 	string engine_1_dpfs, engine_2_dpfs;	
+
 	config_file >> commands_file_dir;
 	config_file >> commands_file_dir;
+
+	config_file >> history_file_dir;
+	config_file >> history_file_dir;
 
 	config_file >> engine_1_name;
 	config_file >> engine_1_name;
@@ -225,7 +317,6 @@ int main(){
 
 	config_file >> engine_2_dpfs;
 	config_file >> engine_2_dpfs;
-
 
 
 	cout<<"----------------"<<endl;	
@@ -233,6 +324,7 @@ int main(){
 	execute_command_list(commands_file_dir);
 
 	
+
 
 		
 
