@@ -17,44 +17,7 @@ string whatever = "test";
 bool history_list_initialized_flag = 0;
 string history_file_dir;
 
-/*struct Node{*/
-/*	string timestamp;*/
-/*	string command;*/
-/*	Node* next;*/
-/*	Node(string new_timestamp, string new_command){*/
-/*		timestamp = new_timestamp;*/
-/*		command = new_command;*/
-/*	}*/
-/*};*/
-
 Node* head;
-
-/*void display(Node* head){*/
-/*	cout<<"--------"<<endl;*/
-/*	Node* current = head;*/
-/*	while (current!=nullptr){*/
-/*		cout <<'['<< current->timestamp<< " : " << current->command<<']' << " ";*/
-/*		current = current->next;*/
-/*	}*/
-/*	cout<<endl;*/
-/*	cout<<"--------"<<endl;*/
-/*}*/
-
-void append(Node*& head, string timestamp, string command){
-	Node* current = head;
-	Node* new_node = new Node(timestamp, command);
-
-	if (head == nullptr){
-		head = new_node;
-		return;
-	}	
-
-	while (current->next!=nullptr){
-		current=current->next;
-	}
-
-	current->next = new_node;
-}
 
 int save_history(string history_file_dir, string command, string arg){
 	if (history_list_initialized_flag == 0){

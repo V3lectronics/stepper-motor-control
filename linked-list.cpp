@@ -11,3 +11,19 @@ void display_list(Node* head){
 	cout<<endl;
 	cout<<"--------"<<endl;
 }
+
+void append(Node*& head, string timestamp, string command){
+	Node* current = head;
+	Node* new_node = new Node(timestamp, command);
+
+	if (head == nullptr){
+		head = new_node;
+		return;
+	}	
+
+	while (current->next!=nullptr){
+		current=current->next;
+	}
+
+	current->next = new_node;
+}

@@ -15,4 +15,6 @@ struct Node{
 
 void display_list(Node* head);
 
+void append(Node*& head, string timestamp, string command);
+
 #endif
