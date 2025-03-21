@@ -70,7 +70,7 @@ int save_history(string history_file_dir, string command, string arg){
 	string command_arg = command+" "+arg;
 
 	append(head, ts, command_arg);
-	display(head);
+	display_list(head);
 
 	if (command == "end"){
 		cout<<"Writing history to: "<<history_file_dir<<endl;	
