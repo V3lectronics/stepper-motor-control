@@ -13,6 +13,7 @@ using namespace std::chrono;
 using namespace std::this_thread;
 using namespace std;
 
+string whatever = "test";
 bool history_list_initialized_flag = 0;
 string history_file_dir;
 
