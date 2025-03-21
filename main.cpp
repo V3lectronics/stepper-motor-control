@@ -6,6 +6,9 @@
 #include <wiringPi.h>
 #include <ctime>
 
+//custom module
+#include "linked-list.h"
+
 using namespace std::chrono;
 using namespace std::this_thread;
 using namespace std;
@@ -13,28 +16,28 @@ using namespace std;
 bool history_list_initialized_flag = 0;
 string history_file_dir;
 
-struct Node{
-	string timestamp;
-	string command;
-	Node* next;
-	Node(string new_timestamp, string new_command){
-		timestamp = new_timestamp;
-		command = new_command;
-	}
-};
+/*struct Node{*/
+/*	string timestamp;*/
+/*	string command;*/
+/*	Node* next;*/
+/*	Node(string new_timestamp, string new_command){*/
+/*		timestamp = new_timestamp;*/
+/*		command = new_command;*/
+/*	}*/
+/*};*/
 
 Node* head;
 
-void display(Node* head){
-	cout<<"--------"<<endl;
-	Node* current = head;
-	while (current!=nullptr){
-		cout <<'['<< current->timestamp<< " : " << current->command<<']' << " ";
-		current = current->next;
-	}
-	cout<<endl;
-	cout<<"--------"<<endl;
-}
+/*void display(Node* head){*/
+/*	cout<<"--------"<<endl;*/
+/*	Node* current = head;*/
+/*	while (current!=nullptr){*/
+/*		cout <<'['<< current->timestamp<< " : " << current->command<<']' << " ";*/
+/*		current = current->next;*/
+/*	}*/
+/*	cout<<endl;*/
+/*	cout<<"--------"<<endl;*/
+/*}*/
 
 void append(Node*& head, string timestamp, string command){
 	Node* current = head;

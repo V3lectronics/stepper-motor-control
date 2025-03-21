@@ -1,16 +1,5 @@
 #include "linked-list.h"
-
-struct Node{
-	string timestamp;
-	string command;
-	Node* next;
-	Node(string new_timestamp, string new_command){
-		timestamp = new_timestamp;
-		command = new_command;
-	}
-};
-
-Node* head;
+#include <iostream>
 
 void display_list(Node* head){
 	cout<<"--------"<<endl;
