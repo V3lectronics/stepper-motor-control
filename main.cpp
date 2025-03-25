@@ -81,14 +81,15 @@ const int vm4 = 22; //31
 //(remember to connect GND);
 
 /*const int min_delay = 2; //minimal delay needed for engine to act predictably*/
-const int base_delay = 10; //step delay at full speed, lowest possible delay.
+const int base_delay = 3; //step delay at full speed, lowest possible delay.
 const double ramp_amount = 15; //amount of acceleration variation ???
 const double ramp_percent = 0.20; //defines at what point of the command we finish
-							 //and start acceleration.
+						 //and start acceleration.
+int round_step_delay; // integer that will hold the extra delay needed
+				// for accelerration  & deceleration			
 
 void ramp(double progress){
 		//cout<<progress<<endl;
-		int round_step_delay;
 
 		//if at beginning of the movement, start at high delay and
 		//gradually decrease delay
@@ -108,7 +109,7 @@ void ramp(double progress){
 		//if at the end of the movement, gradually add delay until stop
 		else{
 			round_step_delay = floorf(base_delay+ramp_amount - ((1-progress)/ramp_percent)*ramp_amount);
-			sleep_for(milliseconds(base_delay));
+			sleep_for(milliseconds(round_step_delay));
 			cout <<"slow down: " << round_step_delay << endl;
 		}
 }
@@ -159,33 +160,36 @@ int run_command(string command, string arg){
 	};
 
 
+	double progress = 0; // 0-1 value representing command execution progress
 	if (command == "up") {
 		int phase = 0;
 
-		double progress = 0; // 0-1 value representing command execution progress
 		for (int i = 0; i < intarg; i++) {
-			progress = double(i)/double(intarg);
 			digitalWrite(hm1, clock_sequence[phase][0]);
 			digitalWrite(hm2, clock_sequence[phase][1]);
 			digitalWrite(hm3, clock_sequence[phase][2]);
 			digitalWrite(hm4, clock_sequence[phase][3]);
 			phase = (phase + 1) % 4; 
 
+			progress = double(i)/double(intarg);
 			ramp(progress);
 
 		}
 	}
 
 	if (command == "down") {
-	    int phase = 0;
-	    for (int i = 0; i < intarg; i++) {
-		digitalWrite(hm1, counter_clock_sequence[phase][0]);
-		digitalWrite(hm2, counter_clock_sequence[phase][1]);
-		digitalWrite(hm3, counter_clock_sequence[phase][2]);
-		digitalWrite(hm4, counter_clock_sequence[phase][3]);
-		phase = (phase + 1) % 4; 
-		sleep_for(milliseconds(base_delay));
-	    }
+		int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(hm1, counter_clock_sequence[phase][0]);
+			digitalWrite(hm2, counter_clock_sequence[phase][1]);
+			digitalWrite(hm3, counter_clock_sequence[phase][2]);
+			digitalWrite(hm4, counter_clock_sequence[phase][3]);
+			phase = (phase + 1) % 4; 
+			/*sleep_for(milliseconds(base_delay));*/
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
+		}
 	}
 
 	if(command == "right"){
@@ -196,7 +200,10 @@ int run_command(string command, string arg){
 			digitalWrite(vm3, clock_sequence[phase][2]);
 			digitalWrite(vm4, clock_sequence[phase][3]);
 			phase = (phase + 1) % 4; 
-			sleep_for(milliseconds(base_delay));
+			/*sleep_for(milliseconds(base_delay));*/
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
 		}
 	}
 
@@ -208,7 +215,10 @@ int run_command(string command, string arg){
 			digitalWrite(vm3, counter_clock_sequence[phase][2]);
 			digitalWrite(vm4, counter_clock_sequence[phase][3]);
 			phase = (phase + 1) % 4;
-			sleep_for(milliseconds(base_delay));
+			/*sleep_for(milliseconds(base_delay));*/
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
 		}
 	}
 
