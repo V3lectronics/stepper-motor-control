@@ -82,8 +82,8 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-const int min_delay = 2; //minimal delay needed for engine to act predictably
-const int step_delay = 5; //step delay at full speed ???
+/*const int min_delay = 2; //minimal delay needed for engine to act predictably*/
+const int base_delay = 10; //step delay at full speed, lowest possible delay.
 const double ramp_amount = 5; //amount of acceleration variation ???
 const double ramp_percent = 0.20; //defines at what point of the command we finish
 							 //and start acceleration.
@@ -95,23 +95,22 @@ void ramp(double progress){
 		//if at beginning of the movement, start at high delay and
 		//gradually decrease delay
 		if(progress < ramp_percent){
-			round_step_delay = floorf(step_delay - progress * ramp_amount);
-			if (round_step_delay < min_delay) round_step_delay = min_delay;
+			round_step_delay = floorf(base_delay - progress * ramp_amount);
+			if (round_step_delay < base_delay) round_step_delay = base_delay;
 			sleep_for(milliseconds(round_step_delay));
 			cout << "0-20%: " << round_step_delay << endl;
 			cout << "0-20% prog: " << progress << endl;
 
-		// if in the middle keep the delay at step_delay
+		// if in the middle keep the delay at step_delay, full speed ahead!
 		} else if(progress > 1-ramp_percent){
-			round_step_delay = floorf(step_delay + progress * ramp_amount);
-			sleep_for(milliseconds(round_step_delay));
-			cout << "80-100%: " << round_step_delay << endl;
+			sleep_for(milliseconds(base_delay));
+			cout << "80-100%: " << base_delay << endl;
 		}
 
 		//if at the end of the movement, gradually add delay until stop
 		else{
-			round_step_delay = floorf(step_delay - progress * ramp_amount);
-			sleep_for(milliseconds(step_delay));
+			round_step_delay = floorf(base_delay - progress * ramp_amount);
+			sleep_for(milliseconds(base_delay));
 			cout <<"20%-80%: " << round_step_delay << endl;
 		}
 }
@@ -187,7 +186,7 @@ int run_command(string command, string arg){
 		digitalWrite(hm3, counter_clock_sequence[phase][2]);
 		digitalWrite(hm4, counter_clock_sequence[phase][3]);
 		phase = (phase + 1) % 4; 
-		sleep_for(milliseconds(step_delay));
+		sleep_for(milliseconds(base_delay));
 	    }
 	}
 
@@ -199,7 +198,7 @@ int run_command(string command, string arg){
 			digitalWrite(vm3, clock_sequence[phase][2]);
 			digitalWrite(vm4, clock_sequence[phase][3]);
 			phase = (phase + 1) % 4; 
-			sleep_for(milliseconds(step_delay));
+			sleep_for(milliseconds(base_delay));
 		}
 	}
 
@@ -211,7 +210,7 @@ int run_command(string command, string arg){
 			digitalWrite(vm3, counter_clock_sequence[phase][2]);
 			digitalWrite(vm4, counter_clock_sequence[phase][3]);
 			phase = (phase + 1) % 4;
-			sleep_for(milliseconds(step_delay));
+			sleep_for(milliseconds(base_delay));
 		}
 	}
 
@@ -238,11 +237,11 @@ int execute_command_list(string commands_file_dir){
         return 1;
     }
 
-	if(step_delay < 0){
+	if(base_delay < 0){
 		cerr<<"ERROR step delay has to be a positive integer"<<endl;
 		return 1;
 	}
-	if(step_delay < 5){
+	if(base_delay < 5){
 		cout<<"WARNING low step delay, this may cause unexpected behavior"<<endl;
 	}
 
