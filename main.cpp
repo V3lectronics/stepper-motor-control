@@ -82,8 +82,9 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-const int step_delay = 10; //step delay at full speed
-const double ramp_amount = 20; //acceleration
+const int min_delay = 2; //minimal delay needed for engine to act predictably
+const int step_delay = 5; //step delay at full speed ???
+const double ramp_amount = 5; //amount of acceleration variation ???
 const double ramp_percent = 0.20; //defines at what point of the command we finish
 							 //and start acceleration.
 
@@ -91,21 +92,27 @@ void ramp(double progress){
 		//cout<<progress<<endl;
 		int round_step_delay;
 
+		//if at beginning of the movement, start at high delay and
+		//gradually decrease delay
 		if(progress < ramp_percent){
 			round_step_delay = floorf(step_delay - progress * ramp_amount);
+			if (round_step_delay < min_delay) round_step_delay = min_delay;
 			sleep_for(milliseconds(round_step_delay));
-			cout << "0-20%" << round_step_delay << endl;
+			cout << "0-20%: " << round_step_delay << endl;
+			cout << "0-20% prog: " << progress << endl;
 
+		// if in the middle keep the delay at step_delay
 		} else if(progress > 1-ramp_percent){
 			round_step_delay = floorf(step_delay + progress * ramp_amount);
 			sleep_for(milliseconds(round_step_delay));
-			cout << "80-100%" << round_step_delay << endl;
+			cout << "80-100%: " << round_step_delay << endl;
 		}
 
+		//if at the end of the movement, gradually add delay until stop
 		else{
-			round_step_delay = floorf(step_delay - ramp_amount);
+			round_step_delay = floorf(step_delay - progress * ramp_amount);
 			sleep_for(milliseconds(step_delay));
-			cout <<"20%-80%" << round_step_delay << endl;
+			cout <<"20%-80%: " << round_step_delay << endl;
 		}
 }
 
