@@ -109,7 +109,7 @@ void ramp(double progress){
 
 		//if at the end of the movement, gradually add delay until stop
 		else{
-			round_step_delay = floorf(base_delay + ((1-progress)/ramp_percent)*ramp_amount);
+			round_step_delay = floorf(base_delay+ramp_amount - ((1-progress)/ramp_percent)*ramp_amount);
 			sleep_for(milliseconds(base_delay));
 			cout <<"slow down: " << round_step_delay << endl;
 		}
