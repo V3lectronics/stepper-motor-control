@@ -95,7 +95,7 @@ void ramp(double progress){
 		//if at beginning of the movement, start at high delay and
 		//gradually decrease delay
 		if(progress < ramp_percent){
-			round_step_delay = floorf(base_delay - progress * ramp_amount);
+			round_step_delay = floorf(base_delay+ramp_amount - ((progress)/ramp_percent)*ramp_amount);
 			if (round_step_delay < base_delay) round_step_delay = base_delay;
 			sleep_for(milliseconds(round_step_delay));
 			cout << "0-20%: " << round_step_delay << endl;
