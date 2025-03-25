@@ -98,20 +98,20 @@ void ramp(double progress){
 			round_step_delay = floorf(base_delay+ramp_amount - ((progress)/ramp_percent)*ramp_amount);
 			if (round_step_delay < base_delay) round_step_delay = base_delay;
 			sleep_for(milliseconds(round_step_delay));
-			cout << "0-20%: " << round_step_delay << endl;
-			cout << "0-20% prog: " << progress << endl;
+			cout << "speed up: " << round_step_delay << endl;
+			cout << "speed up prog: " << progress << endl;
 
 		// if in the middle keep the delay at step_delay, full speed ahead!
 		} else if(progress > 1-ramp_percent){
 			sleep_for(milliseconds(base_delay));
-			cout << "80-100%: " << base_delay << endl;
+			cout << "full speed: " << base_delay << endl;
 		}
 
 		//if at the end of the movement, gradually add delay until stop
 		else{
 			round_step_delay = floorf(base_delay - progress * ramp_amount);
 			sleep_for(milliseconds(base_delay));
-			cout <<"20%-80%: " << round_step_delay << endl;
+			cout <<"slow down: " << round_step_delay << endl;
 		}
 }
 
