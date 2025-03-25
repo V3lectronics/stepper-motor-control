@@ -82,7 +82,7 @@ const int vm4 = 22; //31
 
 /*const int min_delay = 2; //minimal delay needed for engine to act predictably*/
 const int base_delay = 10; //step delay at full speed, lowest possible delay.
-const double ramp_amount = 5; //amount of acceleration variation ???
+const double ramp_amount = 15; //amount of acceleration variation ???
 const double ramp_percent = 0.20; //defines at what point of the command we finish
 							 //and start acceleration.
 
