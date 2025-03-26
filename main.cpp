@@ -140,11 +140,9 @@ int run_command(string command, string arg){
 
 			progress = double(i)/double(intarg);
 			ramp(progress);
-
 		}
 	}
-
-	if (command == "down") {
+	else if (command == "down") {
 		int phase = 0;
 		for (int i = 0; i < intarg; i++) {
 			digitalWrite(hm1, counter_clock_sequence[phase][0]);
@@ -158,8 +156,7 @@ int run_command(string command, string arg){
 			ramp(progress);
 		}
 	}
-
-	if(command == "right"){
+	else if(command == "right"){
 		int phase = 0;
 		for (int i = 0; i < intarg; i++) {
 			digitalWrite(vm1, clock_sequence[phase][0]);
@@ -173,8 +170,7 @@ int run_command(string command, string arg){
 			ramp(progress);
 		}
 	}
-
-	if(command == "left"){
+	else if(command == "left"){
 		int phase = 0;
 		for (int i = 0; i < intarg; i++) {
 			digitalWrite(vm1, counter_clock_sequence[phase][0]);
@@ -188,6 +184,10 @@ int run_command(string command, string arg){
 			ramp(progress);
 		}
 	}
+	else{
+		cerr << "ERROR unknown command: "<<command<<endl;
+	}
+
 
 	//cleanup to stop coils from overheating / energy waste
 	digitalWrite(hm1, LOW);
