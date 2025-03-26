@@ -154,7 +154,7 @@ void left(int intarg){
 		}
 }
 
-int run_command(string command, string arg){
+int run_command(string command, string arg1, string arg2){
 
 	//initialize the pins
 	pinMode(hm1, OUTPUT);
@@ -175,28 +175,38 @@ int run_command(string command, string arg){
 	digitalWrite(vm4, LOW);
 
 
-	int intarg = stoi(arg);
+	int intarg1 = stoi(arg1);
+	int intarg2 = stoi(arg2);
 
-	cout<<"executing: "<<command<<" "<<intarg<<endl;
+	cout<<"executing: "<<command<<" "<<intarg1<<endl;
 
 	if(command == "sleep"){
-		sleep_for(milliseconds(intarg));
+		sleep_for(milliseconds(intarg1));
 	}
 	else if (command == "up") {
-		up(intarg);
+		up(intarg1);
 	}
 	else if (command == "down") {
-		down(intarg);
+		down(intarg1);
 	}
 	else if(command == "right"){
-		right(intarg);
+		right(intarg1);
 	}
 	else if(command == "left"){
-		left(intarg);
+		left(intarg1);
 	}
 	else if(command == "up-left"){
 		cout<<command<<" multithreading"<<endl;
 		// TODO: launch 2 threads to go both up and left using the provided arguments
+
+		up(intarg1);
+		/*left(intarg2);*/
+
+		thread thread1(up, intarg1);
+		/*thread thread2(left, intarg2);*/
+
+		thread1.join();
+		/*thread2.join();*/
 	}
 	else if(command == "up-right"){
 		cout<<command<<" multithreading"<<endl;
@@ -223,7 +233,7 @@ int run_command(string command, string arg){
 	digitalWrite(vm4, LOW);
 
 
-	save_history(history_file_dir, command, to_string(intarg));
+	save_history(history_file_dir, command, to_string(intarg1));
 	
 	return 0;
 }
@@ -243,9 +253,9 @@ int execute_command_list(string commands_file_dir){
 		cout<<"WARNING low step delay, this may cause unexpected behavior"<<endl;
 	}
 
-	string command, arg;
-	while((commands_file>>command)and(commands_file>>arg)){
-		run_command(command, arg);
+	string command, arg1, arg2;
+	while((commands_file>>command)and(commands_file>>arg1)and(commands_file>>arg2)){
+		run_command(command, arg1, arg2);
 	}
 
 	commands_file.close();
