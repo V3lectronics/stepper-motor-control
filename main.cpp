@@ -139,7 +139,7 @@ void right(int intarg){
 			ramp(progress);
 		}
 }
-void left(int intarg){
+void move_left(int intarg){
 	double progress = 0; // 0-1 value representing command execution progress
 	int phase = 0;
 		for (int i = 0; i < intarg; i++) {
@@ -193,20 +193,20 @@ int run_command(string command, string arg1, string arg2){
 		right(intarg1);
 	}
 	else if(command == "left"){
-		left(intarg1);
+		move_left(intarg1);
 	}
 	else if(command == "up-left"){
 		cout<<command<<" multithreading"<<endl;
 		// TODO: launch 2 threads to go both up and left using the provided arguments
-
-		/*up(intarg1);*/
-		left(intarg2);
+		//
+		// TODO: checkout timers (hardware) and priorities
 
 		thread thread1(up, intarg1);
-		/*thread thread2(left, intarg2);*/
+		thread thread2(move_left, intarg2);
 
-		/*thread1.join();*/
-		/*thread2.join();*/
+		// Wait for both threads to finish
+		thread1.join();
+		thread2.join();
 	}
 	else if(command == "up-right"){
 		cout<<command<<" multithreading"<<endl;
