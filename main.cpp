@@ -228,7 +228,7 @@ int run_command(string command, string arg1, string arg2){
 		thread2.join();
 	}
 	else if(command == "end"){
-		cout<<"done"<<command<<endl;
+		cout<<"done"<<endl;
 	}
 	else{
 		cerr<<"ERROR unknown command: "<<command<<endl;
