@@ -1,6 +1,8 @@
 sleep 1000 0
 up-left 500 500
+down-right 500 500
 sleep 1000 0
+up-right 500 500
 down-left 500 500
 sleep 1000 0
 up 500 0
