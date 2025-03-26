@@ -41,7 +41,7 @@ int save_history(string history_file_dir, string command, string arg){
 		fstream history_file(history_file_dir);
 
 		if (not history_file.is_open()) {
-			cerr << "ERROR couldn't open "<<history_file_dir<<endl;
+			cerr<<"ERROR couldn't open "<<history_file_dir<<endl;
 			return 1;
 		}
 
@@ -219,7 +219,6 @@ int run_command(string command, string arg1, string arg2){
 
 		thread1.join();
 		thread2.join();
-
 	}
 	else if(command == "down-right"){
 		thread thread1(down, intarg1);
@@ -227,13 +226,12 @@ int run_command(string command, string arg1, string arg2){
 
 		thread1.join();
 		thread2.join();
-
 	}
 	else if(command == "end"){
-
+		cout<<"done"<<command<<endl;
 	}
 	else{
-		cerr << "ERROR unknown command: "<<command<<endl;
+		cerr<<"ERROR unknown command: "<<command<<endl;
 	}
 
 
@@ -256,7 +254,7 @@ int run_command(string command, string arg1, string arg2){
 int execute_command_list(string commands_file_dir){
 	fstream commands_file(commands_file_dir);
 	if (not commands_file.is_open()) {
-        cerr << "ERROR couldn't open "<<config_path<<endl;
+        cerr << "ERROR couldn't open "<<commands_file_dir<<endl;
         return 1;
     }
 
