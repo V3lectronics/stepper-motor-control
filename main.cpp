@@ -20,7 +20,7 @@ string history_file_dir;
 
 Node* head;
 
-int save_history(string history_file_dir, string command, string arg){
+int save_history(string history_file_dir, string command, string arg1, string arg2){
 	if (history_list_initialized_flag == 0){
 		time_t timestamp = time(NULL);
 		string ts = to_string(timestamp);
@@ -31,7 +31,7 @@ int save_history(string history_file_dir, string command, string arg){
 	time_t timestamp = time(NULL);
 	string ts = to_string(timestamp);
 
-	string command_arg = command+" "+arg;
+	string command_arg = command+" "+arg1+" "+arg2;
 
 	append(head, ts, command_arg);
 	/*display_list(head);*/
@@ -262,7 +262,7 @@ int execute_command_list(string commands_file_dir){
 		cerr<<"ERROR step delay has to be a positive integer"<<endl;
 		return 1;
 	}
-	if(base_delay < 5){
+	if(base_delay < 3){
 		cout<<"WARNING low step delay, this may cause unexpected behavior"<<endl;
 	}
 
