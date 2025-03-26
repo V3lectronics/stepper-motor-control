@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -81,8 +82,78 @@ const int vm3 = 23; //33
 const int vm4 = 22; //31
 //(remember to connect GND);
 
-//takes a command and moves the engines
-//returns 0 if executed succefully  
+int clock_sequence[][4] = {
+	{1, 0, 0, 1},
+	{0, 0, 1, 1},
+	{0, 1, 1, 0},
+	{1, 1, 0, 0},
+};
+
+int counter_clock_sequence[][4] = {
+	{1, 1, 0, 0},
+	{0, 1, 1, 0},
+	{0, 0, 1, 1},
+	{1, 0, 0, 1},
+};
+
+// NOTE: COMMANDS
+void up(int intarg){
+	double progress = 0; // 0-1 value representing command execution progress
+	int phase = 0;
+	for (int i = 0; i < intarg; i++) {
+		digitalWrite(hm1, clock_sequence[phase][0]);
+		digitalWrite(hm2, clock_sequence[phase][1]);
+		digitalWrite(hm3, clock_sequence[phase][2]);
+		digitalWrite(hm4, clock_sequence[phase][3]);
+		phase = (phase + 1) % 4; 
+
+		progress = double(i)/double(intarg);
+		ramp(progress);
+	}
+}
+void down(int intarg){
+	double progress = 0; // 0-1 value representing command execution progress
+	int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(hm1, counter_clock_sequence[phase][0]);
+			digitalWrite(hm2, counter_clock_sequence[phase][1]);
+			digitalWrite(hm3, counter_clock_sequence[phase][2]);
+			digitalWrite(hm4, counter_clock_sequence[phase][3]);
+			phase = (phase + 1) % 4; 
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
+		}
+}
+void right(int intarg){
+	double progress = 0; // 0-1 value representing command execution progress
+	int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(vm1, clock_sequence[phase][0]);
+			digitalWrite(vm2, clock_sequence[phase][1]);
+			digitalWrite(vm3, clock_sequence[phase][2]);
+			digitalWrite(vm4, clock_sequence[phase][3]);
+			phase = (phase + 1) % 4; 
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
+		}
+}
+void left(int intarg){
+	double progress = 0; // 0-1 value representing command execution progress
+	int phase = 0;
+		for (int i = 0; i < intarg; i++) {
+			digitalWrite(vm1, counter_clock_sequence[phase][0]);
+			digitalWrite(vm2, counter_clock_sequence[phase][1]);
+			digitalWrite(vm3, counter_clock_sequence[phase][2]);
+			digitalWrite(vm4, counter_clock_sequence[phase][3]);
+			phase = (phase + 1) % 4;
+
+			progress = double(i)/double(intarg);
+			ramp(progress);
+		}
+}
+
 int run_command(string command, string arg){
 
 	//initialize the pins
@@ -103,21 +174,7 @@ int run_command(string command, string arg){
 	digitalWrite(vm3, LOW);
 	digitalWrite(vm4, LOW);
 
-	int clock_sequence[][4] = {
-	    {1, 0, 0, 1},
-	    {0, 0, 1, 1},
-	    {0, 1, 1, 0},
-	    {1, 1, 0, 0},
-	};
 
-	int counter_clock_sequence[][4] = {
-	    {1, 1, 0, 0},
-	    {0, 1, 1, 0},
-	    {0, 0, 1, 1},
-	    {1, 0, 0, 1},
-	};
-
-	double progress = 0; // 0-1 value representing command execution progress
 	int intarg = stoi(arg);
 
 	cout<<"executing: "<<command<<" "<<intarg<<endl;
@@ -126,60 +183,29 @@ int run_command(string command, string arg){
 		sleep_for(milliseconds(intarg));
 	}
 	else if (command == "up") {
-		int phase = 0;
-
-		for (int i = 0; i < intarg; i++) {
-			digitalWrite(hm1, clock_sequence[phase][0]);
-			digitalWrite(hm2, clock_sequence[phase][1]);
-			digitalWrite(hm3, clock_sequence[phase][2]);
-			digitalWrite(hm4, clock_sequence[phase][3]);
-			phase = (phase + 1) % 4; 
-
-			progress = double(i)/double(intarg);
-			ramp(progress);
-		}
+		up(intarg);
 	}
 	else if (command == "down") {
-		int phase = 0;
-		for (int i = 0; i < intarg; i++) {
-			digitalWrite(hm1, counter_clock_sequence[phase][0]);
-			digitalWrite(hm2, counter_clock_sequence[phase][1]);
-			digitalWrite(hm3, counter_clock_sequence[phase][2]);
-			digitalWrite(hm4, counter_clock_sequence[phase][3]);
-			phase = (phase + 1) % 4; 
-			/*sleep_for(milliseconds(base_delay));*/
-
-			progress = double(i)/double(intarg);
-			ramp(progress);
-		}
+		down(intarg);
 	}
 	else if(command == "right"){
-		int phase = 0;
-		for (int i = 0; i < intarg; i++) {
-			digitalWrite(vm1, clock_sequence[phase][0]);
-			digitalWrite(vm2, clock_sequence[phase][1]);
-			digitalWrite(vm3, clock_sequence[phase][2]);
-			digitalWrite(vm4, clock_sequence[phase][3]);
-			phase = (phase + 1) % 4; 
-			/*sleep_for(milliseconds(base_delay));*/
-
-			progress = double(i)/double(intarg);
-			ramp(progress);
-		}
+		right(intarg);
 	}
 	else if(command == "left"){
-		int phase = 0;
-		for (int i = 0; i < intarg; i++) {
-			digitalWrite(vm1, counter_clock_sequence[phase][0]);
-			digitalWrite(vm2, counter_clock_sequence[phase][1]);
-			digitalWrite(vm3, counter_clock_sequence[phase][2]);
-			digitalWrite(vm4, counter_clock_sequence[phase][3]);
-			phase = (phase + 1) % 4;
-			/*sleep_for(milliseconds(base_delay));*/
-
-			progress = double(i)/double(intarg);
-			ramp(progress);
-		}
+		left(intarg);
+	}
+	else if(command == "up-left"){
+		cout<<command<<" multithreading"<<endl;
+		// TODO: launch 2 threads to go both up and left using the provided arguments
+	}
+	else if(command == "up-right"){
+		cout<<command<<" multithreading"<<endl;
+	}
+	else if(command == "down-left"){
+		cout<<command<<" multithreading"<<endl;
+	}
+	else if(command == "down-right"){
+		cout<<command<<" multithreading"<<endl;
 	}
 	else{
 		cerr << "ERROR unknown command: "<<command<<endl;
