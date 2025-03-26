@@ -103,15 +103,6 @@ int run_command(string command, string arg){
 	digitalWrite(vm3, LOW);
 	digitalWrite(vm4, LOW);
 
-
-	int intarg = stoi(arg);
-
-	cout<<"executing: "<<command<<" "<<intarg<<endl;
-
-	if(command == "sleep"){
-		sleep_for(milliseconds(intarg));
-	}
-
 	int clock_sequence[][4] = {
 	    {1, 0, 0, 1},
 	    {0, 0, 1, 1},
@@ -126,9 +117,15 @@ int run_command(string command, string arg){
 	    {1, 0, 0, 1},
 	};
 
-
 	double progress = 0; // 0-1 value representing command execution progress
-	if (command == "up") {
+	int intarg = stoi(arg);
+
+	cout<<"executing: "<<command<<" "<<intarg<<endl;
+
+	if(command == "sleep"){
+		sleep_for(milliseconds(intarg));
+	}
+	else if (command == "up") {
 		int phase = 0;
 
 		for (int i = 0; i < intarg; i++) {
