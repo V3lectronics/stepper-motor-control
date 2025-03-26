@@ -246,7 +246,7 @@ int run_command(string command, string arg1, string arg2){
 	digitalWrite(vm4, LOW);
 
 
-	save_history(history_file_dir, command, to_string(intarg1));
+	save_history(history_file_dir, command, to_string(intarg1), to_string(intarg2));
 	
 	return 0;
 }
