@@ -125,7 +125,7 @@ void down(int intarg){
 			ramp(progress);
 		}
 }
-void right(int intarg){
+void move_right(int intarg){
 	double progress = 0; // 0-1 value representing command execution progress
 	int phase = 0;
 		for (int i = 0; i < intarg; i++) {
@@ -190,13 +190,12 @@ int run_command(string command, string arg1, string arg2){
 		down(intarg1);
 	}
 	else if(command == "right"){
-		right(intarg1);
+		move_right(intarg1);
 	}
 	else if(command == "left"){
 		move_left(intarg1);
 	}
 	else if(command == "up-left"){
-		cout<<command<<" multithreading"<<endl;
 		// TODO: launch 2 threads to go both up and left using the provided arguments
 		//
 		// TODO: checkout timers (hardware) and priorities
@@ -204,18 +203,34 @@ int run_command(string command, string arg1, string arg2){
 		thread thread1(up, intarg1);
 		thread thread2(move_left, intarg2);
 
-		// Wait for both threads to finish
 		thread1.join();
 		thread2.join();
 	}
 	else if(command == "up-right"){
-		cout<<command<<" multithreading"<<endl;
+		thread thread1(up, intarg1);
+		thread thread2(move_right, intarg2);
+
+		thread1.join();
+		thread2.join();
 	}
 	else if(command == "down-left"){
-		cout<<command<<" multithreading"<<endl;
+		thread thread1(down, intarg1);
+		thread thread2(move_left, intarg2);
+
+		thread1.join();
+		thread2.join();
+
 	}
 	else if(command == "down-right"){
-		cout<<command<<" multithreading"<<endl;
+		thread thread1(down, intarg1);
+		thread thread2(move_right, intarg2);
+
+		thread1.join();
+		thread2.join();
+
+	}
+	else if(command == "end"){
+
 	}
 	else{
 		cerr << "ERROR unknown command: "<<command<<endl;
