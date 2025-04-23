@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
+#include <string>
 #include <thread>
 #include <cmath>
 #include <wiringPi.h>
@@ -17,6 +18,7 @@ using namespace std;
 
 bool history_list_initialized_flag = 0;
 string history_file_dir;
+string engine_1_dpfs, engine_2_dpfs; //dpfs → Degrees Per Full Step
 
 Node* head;
 
@@ -161,6 +163,23 @@ void move_left(int intarg){
 		}
 }
 
+bool check_char(string word, char c){
+	for (int i=0; i<size(word); i++) {
+		if (word[i] == c){
+			return true;
+		}
+	}
+	return false;
+}
+
+int deg_to_steps(int deg){
+	int steps;
+	// I am assuming here that both engines have the same dpfs despite declaring 2 vars.
+	steps = stof(engine_1_dpfs) * deg;
+
+	return steps;
+}
+
 /**
  * @brief Runs commands and takes arguments to modify how they are executed.
  * 
@@ -198,16 +217,33 @@ int run_command(string command, string arg1, string arg2){
 	if(command == "sleep"){
 		sleep_for(milliseconds(intarg1));
 	}
-	else if (command == "up") {
+	else if (command == "up" || (command == "G01_A" && intarg1 > 0)) {
+		//if the command is a gcode, change the argument to represent full steps 
+		//instead of degrees.
+		if (check_char(command, 'G')){
+			intarg1 = deg_to_steps(intarg1);
+		}
 		up(intarg1);
 	}
-	else if (command == "down") {
+	else if (command == "down" || (command == "G01_A" && intarg1 < 0)) {
+		if (check_char(command, 'G')){
+			intarg1 = deg_to_steps(intarg1);
+		}
+		up(intarg1);
 		down(intarg1);
 	}
-	else if(command == "right"){
+	else if(command == "right" || (command == "G01_B" && intarg1 > 0)){
+		if (check_char(command, 'G')){
+			intarg1 = deg_to_steps(intarg1);
+		}
+		up(intarg1);
 		move_right(intarg1);
 	}
-	else if(command == "left"){
+	else if(command == "left" || (command == "G01_B" && intarg1 < 0)){
+		if (check_char(command, 'G')){
+			intarg1 = deg_to_steps(intarg1);
+		}
+		up(intarg1);
 		move_left(intarg1);
 	}
 	else if(command == "up-left"){
@@ -304,7 +340,7 @@ int main(){
 	}
 
 	string commands_file_dir, engine_1_name, engine_2_name;
-	string engine_1_dpfs, engine_2_dpfs;	
+	/*string engine_1_dpfs, engine_2_dpfs; */ //this has been changed to a global variable
 
 	config_file >> commands_file_dir;
 	config_file >> commands_file_dir;
