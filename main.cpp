@@ -175,7 +175,7 @@ bool check_char(string word, char c){
 int deg_to_steps(int deg){
 	int steps;
 	// I am assuming here that both engines have the same dpfs despite declaring 2 vars.
-	steps = abs(deg / stof(engine_1_dpfs));
+	steps = abs(deg / stof(engine_1_dpfs))/2;
 
 	return steps;
 }
@@ -222,12 +222,14 @@ int run_command(string command, string arg1, string arg2){
 		//instead of degrees.
 		if (check_char(command, 'G')){
 			intarg1 = deg_to_steps(intarg1);
+			cout<<"Interpreted Gcode as up"<<endl;
 		}
 		up(intarg1);
 	}
 	else if (command == "down" || (command == "G01_A" && intarg1 < 0)) {
 		if (check_char(command, 'G')){
 			intarg1 = deg_to_steps(intarg1);
+			cout<<"Interpreted Gcode as down"<<endl;
 		}
 		up(intarg1);
 		down(intarg1);
@@ -235,6 +237,7 @@ int run_command(string command, string arg1, string arg2){
 	else if(command == "right" || (command == "G01_B" && intarg1 > 0)){
 		if (check_char(command, 'G')){
 			intarg1 = deg_to_steps(intarg1);
+			cout<<"Interpreted Gcode as right"<<endl;
 		}
 		up(intarg1);
 		move_right(intarg1);
@@ -242,6 +245,7 @@ int run_command(string command, string arg1, string arg2){
 	else if(command == "left" || (command == "G01_B" && intarg1 < 0)){
 		if (check_char(command, 'G')){
 			intarg1 = deg_to_steps(intarg1);
+			cout<<"Interpreted Gcode as left"<<endl;
 		}
 		up(intarg1);
 		move_left(intarg1);
