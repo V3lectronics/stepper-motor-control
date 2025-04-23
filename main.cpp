@@ -231,7 +231,6 @@ int run_command(string command, string arg1, string arg2){
 			intarg1 = deg_to_steps(intarg1);
 			cout<<"Interpreted Gcode as down"<<endl;
 		}
-		up(intarg1);
 		down(intarg1);
 	}
 	else if(command == "right" || (command == "G01_B" && intarg1 > 0)){
@@ -239,7 +238,6 @@ int run_command(string command, string arg1, string arg2){
 			intarg1 = deg_to_steps(intarg1);
 			cout<<"Interpreted Gcode as right"<<endl;
 		}
-		up(intarg1);
 		move_right(intarg1);
 	}
 	else if(command == "left" || (command == "G01_B" && intarg1 < 0)){
@@ -247,7 +245,6 @@ int run_command(string command, string arg1, string arg2){
 			intarg1 = deg_to_steps(intarg1);
 			cout<<"Interpreted Gcode as left"<<endl;
 		}
-		up(intarg1);
 		move_left(intarg1);
 	}
 	else if(command == "up-left"){
