@@ -20,6 +20,13 @@ string history_file_dir;
 
 Node* head;
 
+/**
+ * @brief This function saves all executed commands into a history file.
+ * 
+ * @param history_file_dir the diretcory of the histor file.
+ * @param command the command that needs to be saved.
+ * @return 0 if success, 1 if error.
+ */
 int save_history(string history_file_dir, string command, string arg1, string arg2){
 	if (history_list_initialized_flag == 0){
 		time_t timestamp = time(NULL);
@@ -154,6 +161,14 @@ void move_left(int intarg){
 		}
 }
 
+/**
+ * @brief Runs commands and takes arguments to modify how they are executed.
+ * 
+ * @param command the command to be run e.g. "up"
+ * @param arg1 the first argument
+ * @param arg2 the second argument
+ * @return 0 if success, 1 if error.
+ */
 int run_command(string command, string arg1, string arg2){
 
 	//initialize the pins
@@ -196,8 +211,6 @@ int run_command(string command, string arg1, string arg2){
 		move_left(intarg1);
 	}
 	else if(command == "up-left"){
-		// TODO: launch 2 threads to go both up and left using the provided arguments
-		//
 		// TODO: checkout timers (hardware) and priorities
 
 		thread thread1(up, intarg1);
