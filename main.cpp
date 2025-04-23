@@ -175,7 +175,7 @@ bool check_char(string word, char c){
 int deg_to_steps(int deg){
 	int steps;
 	// I am assuming here that both engines have the same dpfs despite declaring 2 vars.
-	steps = stof(engine_1_dpfs) * deg;
+	steps = abs(deg / stof(engine_1_dpfs));
 
 	return steps;
 }
