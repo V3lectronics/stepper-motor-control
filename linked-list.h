@@ -3,6 +3,9 @@
 #include <string>
 using namespace std;
 
+/**
+ * @brief This is a classic linked list node containing data necessary to save the commands to the history file.
+ */
 struct Node{
 	string timestamp;
 	string command;

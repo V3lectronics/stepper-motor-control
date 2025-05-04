@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['printmessage_0',['printMessage',['../multithreading-test_8cpp.html#a2c1f916b04d89d97d5727e47e7c7b271',1,'multithreading-test.cpp']]]
+  ['node_0',['Node',['../structNode.html#a2870675d993cc24e8d24979d7d350902',1,'Node::Node(string new_timestamp, string new_command)'],['../structNode.html#a2870675d993cc24e8d24979d7d350902',1,'Node::Node(string new_timestamp, string new_command)']]]
 ];

@@ -23,10 +23,12 @@ string engine_1_dpfs, engine_2_dpfs; //dpfs → Degrees Per Full Step
 Node* head;
 
 /**
- * @brief This function saves all executed commands into a history file.
- * 
- * @param history_file_dir the diretcory of the histor file.
- * @param command the command that needs to be saved.
+ * @brief Saves all executed commands into a history file.
+ *
+ * @param history_file_dir The directory of the history file.
+ * @param command The command that needs to be saved.
+ * @param arg1 First argument.
+ * @param arg2 Second argument.
  * @return 0 if success, 1 if error.
  */
 int save_history(string history_file_dir, string command, string arg1, string arg2){
@@ -106,6 +108,11 @@ int counter_clock_sequence[][4] = {
 };
 
 // NOTE: COMMANDS
+/**
+ * @brief Provides upwards movement according to the amount of steps needed.
+ *
+ * @param intarg The argument, read form the commands file. It tells the funciton how many steps to perform.
+ */
 void up(int intarg){
 	double progress = 0; // 0-1 value representing command execution progress
 	int phase = 0;
@@ -301,6 +308,12 @@ int run_command(string command, string arg1, string arg2){
 	return 0;
 }
 
+/**
+ * @brief Reades the commands from the commands file, then sends them further through the execution pipeline.
+ *
+ * @param commands_file_dir The directory of the commands file.
+ * @return 0 if success, 1 if error.
+ */
 int execute_command_list(string commands_file_dir){
 	fstream commands_file(commands_file_dir);
 	if (not commands_file.is_open()) {

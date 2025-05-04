@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../1-logic-test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;1-logic-test.cpp'],['../blink_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;blink.cpp'],['../gcode-test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;gcode-test.cpp'],['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;main.cpp'],['../multithreading-test_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;multithreading-test.cpp']]],
-  ['move_5fleft_1',['move_left',['../main_8cpp.html#ab98c183f3c8a660e5bfcb89601b2d340',1,'main.cpp']]],
-  ['move_5fright_2',['move_right',['../main_8cpp.html#a8df4333d4857d28a981ffa972c3010ec',1,'main.cpp']]]
+  ['execute_5fcommand_5flist_0',['execute_command_list',['../1-logic-test_8cpp.html#a7a0b31c8e24c2648505436661288294e',1,'execute_command_list(string commands_file_dir):&#160;1-logic-test.cpp'],['../main_8cpp.html#a7a0b31c8e24c2648505436661288294e',1,'execute_command_list(string commands_file_dir):&#160;main.cpp']]]
 ];

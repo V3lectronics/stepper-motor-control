@@ -72,6 +72,7 @@ $(function() {
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;wiringPi.h&gt;</code><br />
@@ -83,27 +84,28 @@ Include dependency graph for main.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#amain_8cpp" alt=""/></div>
 <map name="amain_8cpp" id="amain_8cpp">
-<area shape="rect" title=" " alt="" coords="385,5,467,32"/>
+<area shape="rect" title=" " alt="" coords="462,5,545,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,71,107"/>
 <area shape="rect" title=" " alt="" coords="95,80,175,107"/>
 <area shape="rect" title=" " alt="" coords="200,80,273,107"/>
-<area shape="rect" title=" " alt="" coords="375,155,442,181"/>
-<area shape="rect" title=" " alt="" coords="349,80,413,107"/>
-<area shape="rect" title=" " alt="" coords="501,155,564,181"/>
-<area shape="rect" title=" " alt="" coords="529,80,616,107"/>
-<area shape="rect" title=" " alt="" coords="641,80,699,107"/>
-<area shape="rect" href="linked-list_8h.html" title=" " alt="" coords="774,80,873,107"/>
-<area shape="rect" href="ramp_8h.html" title=" " alt="" coords="437,80,505,107"/>
-<area shape="rect" title=" " alt="" coords="794,155,853,181"/>
+<area shape="rect" title=" " alt="" coords="627,155,694,181"/>
+<area shape="rect" title=" " alt="" coords="362,155,421,181"/>
+<area shape="rect" title=" " alt="" coords="471,80,535,107"/>
+<area shape="rect" title=" " alt="" coords="844,155,907,181"/>
+<area shape="rect" title=" " alt="" coords="611,80,697,107"/>
+<area shape="rect" title=" " alt="" coords="722,80,781,107"/>
+<area shape="rect" href="linked-list_8h.html" title=" " alt="" coords="298,80,397,107"/>
+<area shape="rect" href="ramp_8h.html" title=" " alt="" coords="805,80,873,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a72cb9db1382c6be028a1272c651467a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a72cb9db1382c6be028a1272c651467a1">save_history</a> (string <a class="el" href="main_8cpp.html#ac3838ddc053c203924aa7f5d04715f0d">history_file_dir</a>, string command, string arg1, string arg2)</td></tr>
-<tr class="memdesc:a72cb9db1382c6be028a1272c651467a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function saves all executed commands into a history file.  <a href="main_8cpp.html#a72cb9db1382c6be028a1272c651467a1">More...</a><br /></td></tr>
+<tr class="memdesc:a72cb9db1382c6be028a1272c651467a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves all executed commands into a history file.  <a href="main_8cpp.html#a72cb9db1382c6be028a1272c651467a1">More...</a><br /></td></tr>
 <tr class="separator:a72cb9db1382c6be028a1272c651467a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5c3712af2104fd22d55b16c00bf6e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4d5c3712af2104fd22d55b16c00bf6e9">up</a> (int intarg)</td></tr>
+<tr class="memdesc:a4d5c3712af2104fd22d55b16c00bf6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides upwards movement according to the amount of steps needed.  <a href="main_8cpp.html#a4d5c3712af2104fd22d55b16c00bf6e9">More...</a><br /></td></tr>
 <tr class="separator:a4d5c3712af2104fd22d55b16c00bf6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada9d26ab51d1153bf8e87be67b9d5b42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada9d26ab51d1153bf8e87be67b9d5b42">down</a> (int intarg)</td></tr>
 <tr class="separator:ada9d26ab51d1153bf8e87be67b9d5b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,10 +113,15 @@ Functions</h2></td></tr>
 <tr class="separator:a8df4333d4857d28a981ffa972c3010ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab98c183f3c8a660e5bfcb89601b2d340"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab98c183f3c8a660e5bfcb89601b2d340">move_left</a> (int intarg)</td></tr>
 <tr class="separator:ab98c183f3c8a660e5bfcb89601b2d340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca615de9c087c28dae0007b394860deb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aca615de9c087c28dae0007b394860deb">check_char</a> (string word, char c)</td></tr>
+<tr class="separator:aca615de9c087c28dae0007b394860deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d25e998f840a9e05b68959056af31de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a6d25e998f840a9e05b68959056af31de">deg_to_steps</a> (int deg)</td></tr>
+<tr class="separator:a6d25e998f840a9e05b68959056af31de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e6cf0be58a3f284264b7e113e055c78"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7e6cf0be58a3f284264b7e113e055c78">run_command</a> (string command, string arg1, string arg2)</td></tr>
 <tr class="memdesc:a7e6cf0be58a3f284264b7e113e055c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs commands and takes arguments to modify how they are executed.  <a href="main_8cpp.html#a7e6cf0be58a3f284264b7e113e055c78">More...</a><br /></td></tr>
 <tr class="separator:a7e6cf0be58a3f284264b7e113e055c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a0b31c8e24c2648505436661288294e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7a0b31c8e24c2648505436661288294e">execute_command_list</a> (string commands_file_dir)</td></tr>
+<tr class="memdesc:a7a0b31c8e24c2648505436661288294e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reades the commands from the commands file, then sends them further through the execution pipeline.  <a href="main_8cpp.html#a7a0b31c8e24c2648505436661288294e">More...</a><br /></td></tr>
 <tr class="separator:a7a0b31c8e24c2648505436661288294e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +132,10 @@ Variables</h2></td></tr>
 <tr class="separator:aaa3646af1e4d1bf2027a4901531a4024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3838ddc053c203924aa7f5d04715f0d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac3838ddc053c203924aa7f5d04715f0d">history_file_dir</a></td></tr>
 <tr class="separator:ac3838ddc053c203924aa7f5d04715f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ffd3366ee4d4ab0b34c169dce98fabd"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1ffd3366ee4d4ab0b34c169dce98fabd">engine_1_dpfs</a></td></tr>
+<tr class="separator:a1ffd3366ee4d4ab0b34c169dce98fabd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bf824a9d0f2a3aa75435c426ad345b5"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0bf824a9d0f2a3aa75435c426ad345b5">engine_2_dpfs</a></td></tr>
+<tr class="separator:a0bf824a9d0f2a3aa75435c426ad345b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3e81b47ac0637ebb1ea7cc12812405a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa3e81b47ac0637ebb1ea7cc12812405a">head</a></td></tr>
 <tr class="separator:aa3e81b47ac0637ebb1ea7cc12812405a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4122f7b533cd46b03c926dda45da0c8"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa4122f7b533cd46b03c926dda45da0c8">config_path</a> = &quot;motor.conf&quot;</td></tr>
@@ -151,6 +162,52 @@ Variables</h2></td></tr>
 <tr class="separator:ad3c5f3955ab7ad7fcdd4502948d93b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aca615de9c087c28dae0007b394860deb" name="aca615de9c087c28dae0007b394860deb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca615de9c087c28dae0007b394860deb">&#9670;&nbsp;</a></span>check_char()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool check_char </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>word</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6d25e998f840a9e05b68959056af31de" name="a6d25e998f840a9e05b68959056af31de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d25e998f840a9e05b68959056af31de">&#9670;&nbsp;</a></span>deg_to_steps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int deg_to_steps </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>deg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ada9d26ab51d1153bf8e87be67b9d5b42" name="ada9d26ab51d1153bf8e87be67b9d5b42"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada9d26ab51d1153bf8e87be67b9d5b42">&#9670;&nbsp;</a></span>down()</h2>
 
@@ -184,6 +241,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reades the commands from the commands file, then sends them further through the execution pipeline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">commands_file_dir</td><td>The directory of the commands file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if success, 1 if error. </dd></dl>
 
 </div>
 </div>
@@ -323,11 +389,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function saves all executed commands into a history file. </p>
+<p>Saves all executed commands into a history file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">history_file_dir</td><td>the diretcory of the histor file. </td></tr>
-    <tr><td class="paramname">command</td><td>the command that needs to be saved. </td></tr>
+    <tr><td class="paramname">history_file_dir</td><td>The directory of the history file. </td></tr>
+    <tr><td class="paramname">command</td><td>The command that needs to be saved. </td></tr>
+    <tr><td class="paramname">arg1</td><td>First argument. </td></tr>
+    <tr><td class="paramname">arg2</td><td>Second argument. </td></tr>
   </table>
   </dd>
 </dl>
@@ -350,6 +418,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Provides upwards movement according to the amount of steps needed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">intarg</td><td>The argument, read form the commands file. It tells the funciton how many steps to perform. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -406,6 +482,34 @@ Variables</h2></td></tr>
 <div class="line">    {1, 0, 0, 1},</div>
 <div class="line">}</div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="a1ffd3366ee4d4ab0b34c169dce98fabd" name="a1ffd3366ee4d4ab0b34c169dce98fabd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ffd3366ee4d4ab0b34c169dce98fabd">&#9670;&nbsp;</a></span>engine_1_dpfs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string engine_1_dpfs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0bf824a9d0f2a3aa75435c426ad345b5" name="a0bf824a9d0f2a3aa75435c426ad345b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bf824a9d0f2a3aa75435c426ad345b5">&#9670;&nbsp;</a></span>engine_2_dpfs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string engine_2_dpfs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a id="aa3e81b47ac0637ebb1ea7cc12812405a" name="aa3e81b47ac0637ebb1ea7cc12812405a"></a>

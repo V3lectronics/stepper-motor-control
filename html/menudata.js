@@ -53,6 +53,7 @@ var menudata={children:[
 {text:"Variables",url:"globals_vars.html",children:[
 {text:"b",url:"globals_vars.html#index_b"},
 {text:"c",url:"globals_vars.html#index_c"},
+{text:"e",url:"globals_vars.html#index_e"},
 {text:"h",url:"globals_vars.html#index_h"},
 {text:"l",url:"globals_vars.html#index_l"},
 {text:"r",url:"globals_vars.html#index_r"},
